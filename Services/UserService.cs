@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SkillsTracker.Data;
 using SkillsTracker.Models;
+
+namespace SkillsTracker.Services;
 
 public class UserService : IUserService
 {

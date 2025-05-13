@@ -2,6 +2,9 @@ using System.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SkillsTracker.Models;
+using SkillsTracker.Services;
+
+namespace SkillsTracker.Controllers;
 
 [Route("users")]
 [ApiController]

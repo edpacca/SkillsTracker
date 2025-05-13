@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using SkillsTracker.Data;
-using SkillsTracker.Models;
+using SkillsTracker.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

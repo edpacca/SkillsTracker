@@ -1,6 +1,6 @@
-using System;
+using SkillsTracker.Models;
 
-namespace SkillsTracker.Models;
+namespace SkillsTracker.Services;
 
 public interface IUserService
 {
