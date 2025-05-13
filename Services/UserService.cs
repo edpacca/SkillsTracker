@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using SkillsTracker.Data;
 using SkillsTracker.Models;
 
-public class UserService
+public class UserService : IUserService
 {
     private readonly ApplicationDbContext _context;
 
