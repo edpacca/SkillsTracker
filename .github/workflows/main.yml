@@ -3,11 +3,11 @@ run-name: ${{ github.head_ref }} ${{ github.sha }}
 on:
   push:
     branches:
-    - main
+      - main
   pull_request:
     branches:
-    - main
+      - main
 
 jobs:
   run-tests:
-    uses: ./run-tests.yml
+    uses: ./.github/workflows/run-tests.yml
