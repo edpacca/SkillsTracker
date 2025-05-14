@@ -1,9 +1,4 @@
-name: Run Tests on Merge to Main
-
-on:
-  push:
-    branches:
-      - main
+name: SkillsTracker Tests
 
 jobs:
   test:
