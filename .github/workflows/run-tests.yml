@@ -1,5 +1,13 @@
 name: SkillsTracker Tests
 
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - mai
+
 jobs:
   test:
     runs-on: ubuntu-latest
