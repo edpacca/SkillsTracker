@@ -29,4 +29,4 @@ jobs:
         run: dotnet build ./SkillsTracker.tests/SkillsTracker.tests.csproj --no-restore
 
       - name: Run tests
-        run: dotnet test ./SkillsTracker.test/SkillsTracker.tests.csproj --no-build --verbosity normal
+        run: dotnet test ./SkillsTracker.tests/SkillsTracker.tests.csproj --no-build --verbosity normal
