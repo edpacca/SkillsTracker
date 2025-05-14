@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Moq;
-using SkillsTracker.Data;
 using SkillsTracker.Data.Repository;
 using SkillsTracker.Models;
 using SkillsTracker.Services;
