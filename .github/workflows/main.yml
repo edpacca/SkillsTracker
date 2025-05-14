@@ -1,0 +1,13 @@
+name: SkillsTracker CI
+run-name: ${{ github.head_ref }} ${{ github.sha }}
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+    branches:
+    - main
+
+jobs:
+  run-tests:
+    uses: ./.github/workflows/run-tests.yml
