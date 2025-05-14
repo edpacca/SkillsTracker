@@ -1,0 +1,32 @@
+name: SkillsTracker Tests
+
+on:
+  workflow_call:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore ./SkillsTracker/SkillsTracker.csproj
+
+      - name: Restore dependencies
+        run: dotnet restore ./SkillsTracker.tests/SkillsTracker.tests.csproj
+
+      - name: Build project
+        run: dotnet build ./SkillsTracker/SkillsTracker.csproj --no-restore
+
+      - name: Build project
+        run: dotnet build ./SkillsTracker.tests/SkillsTracker.tests.csproj --no-restore
+
+      - name: Run tests
+        run: dotnet test ./SkillsTracker.tests/SkillsTracker.tests.csproj --no-build --verbosity normal

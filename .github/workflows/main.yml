@@ -3,10 +3,10 @@ run-name: ${{ github.head_ref }} ${{ github.sha }}
 on:
   push:
     branches:
-    - main
+      - main
   pull_request:
     branches:
-    - main
+      - main
 
 jobs:
   run-tests:
