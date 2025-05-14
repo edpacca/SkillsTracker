@@ -1,12 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using SkillsTracker.Data;
+using SkillsTracker.Data.Repository;
+using SkillsTracker.Models;
+using SkillsTracker.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("PostgresConnection");
 
 // Add services to the container.
+builder.Services.AddScoped<IRepository<User>, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddControllers();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
 
@@ -19,7 +24,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    app.MapScalarApiReference();
+    app.MapScalarApiReference(); // endpoint at: /scalar/v1
 }
 
 app.UseHttpsRedirection();

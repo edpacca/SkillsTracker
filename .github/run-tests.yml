@@ -1,0 +1,34 @@
+name: Run Tests on Merge to Main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.4'
+
+      - name: Restore dependencies
+        run: dotnet restore ./SkillsTracker/SkillsTracker.sln
+
+      - name: Restore dependencies
+        run: dotnet restore ./SkillsTracker.tests/SkillsTracker.tests.sln
+
+      - name: Build project
+        run: dotnet build ./SkillsTracker/SkillsTracker.sln --no-restore
+
+      - name: Build project
+        run: dotnet build ./SkillsTracker.tests/SkillsTracker.tests.sln --no-restore
+
+      - name: Run tests
+        run: dotnet test ./SkillsTracker.test/SkillsTracker.tests.sln --no-build --verbosity normal
