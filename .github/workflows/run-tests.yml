@@ -1,12 +1,7 @@
 name: SkillsTracker Tests
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - mai
+  workflow_call:
 
 jobs:
   test:
