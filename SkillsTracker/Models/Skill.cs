@@ -13,6 +13,7 @@ public class Skill
 
     public string? Description { get; set; }
 
+    [JsonIgnore]
     public IList<Level> Levels { get; set; } = [];
 
     [JsonIgnore]
