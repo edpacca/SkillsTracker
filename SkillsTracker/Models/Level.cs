@@ -12,5 +12,6 @@ public class Level
 
     public int? Value { get; set; }
 
-    public IList<Skill> Skills { get; set; } = [];
+    public int TopicId { get; set; }
+    public Topic? Topic { get; set; }
 }

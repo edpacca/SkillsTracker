@@ -14,7 +14,7 @@ public class Skill
     public string? Description { get; set; }
 
     [JsonIgnore]
-    public IList<Level> Levels { get; set; } = [];
+    public IList<TopicSkillLevel> TopicLevelSkills { get; set; } = [];
 
     [JsonIgnore]
     public IList<UserSkill> UserSkills { get; set; } = [];
