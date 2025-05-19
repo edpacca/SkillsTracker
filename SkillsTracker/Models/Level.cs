@@ -1,16 +1,17 @@
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
 namespace SkillsTracker.Models;
 
-public class User
+public class Level
 {
     public int Id { get; set; }
 
     [Required]
-    [MaxLength(100)]
+    [MaxLength(36)]
     public string? Name { get; set; }
 
-    [JsonIgnore]
-    public IList<UserSkill> UserSkills { get; set; } = [];
+    public int? Value { get; set; }
+
+    public int TopicId { get; set; }
+    public Topic? Topic { get; set; }
 }
