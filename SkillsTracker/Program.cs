@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
-using SkillsTracker.Components;
 using SkillsTracker.Data;
 using SkillsTracker.Data.Repository;
 using SkillsTracker.Models;
@@ -26,6 +25,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+builder.Services.AddScoped(sp => new HttpClient
+{
+    BaseAddress = new Uri(builder.Configuration["AppUrl"] ?? "localhost:0000"),
+});
 
 builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 
