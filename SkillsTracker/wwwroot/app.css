@@ -1,3 +1,7 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
 .text-danger {
     color: red;
     font-weight: bold;
@@ -5,4 +9,53 @@
 
 .debug {
     border: 2px solid magenta;
+}
+
+/* General Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid #333; /* Outer table border */
+    background-color: #f9f9f9; /* Light background */
+}
+
+/* Table Head */
+thead {
+    background-color: #333; /* Dark header */
+    color: white;
+}
+
+/* Table Headers */
+th {
+    padding: 12px;
+    border-bottom: 3px solid #555; /* Stronger bottom border */
+    text-align: left;
+    font-size: 16px;
+}
+
+/* Table Body */
+tbody {
+    font-size: 14px;
+}
+
+/* Table Rows */
+tr {
+    transition: background-color 0.3s;
+}
+
+/* Table Cells */
+td {
+    padding: 10px;
+    border: 1px solid #ccc; /* Cell borders */
+}
+
+/* Alternating Row Colors */
+tbody tr:nth-child(even) {
+    background-color: #eee;
+}
+
+/* Hover Effect */
+tbody tr:hover {
+    background-color: #ddd;
+    cursor: pointer;
 }

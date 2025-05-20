@@ -15,20 +15,12 @@ else
             <tr>
                 <th>Id</th>
                 <th>Name</th>
-                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var user in users)
             {
-                <tr>
-                    <td>@user.Id</td>
-                    <td>@user.Name</td>
-                    <td>
-                        <button class="btn btn-warning" @onclick="() => EditUser(user)">Edit</button>
-                        <button class="btn btn-danger" @onclick="() => DeleteUser(user.Id)">Delete</button>
-                    </td>
-                </tr>
+                <UserInfo user=@user/>
             }
         </tbody>
     </table>
@@ -36,16 +28,6 @@ else
 
 <hr />
 
-<h3>@(editingUser != null ? "Edit User" : "Add User")</h3>
-
-<form @onsubmit="SaveUser">
-    <div class="form-group">
-        <label>Name:</label>
-        <input type="text" class="form-control" bind="@newUser.Name" required />
-    </div>
-    <button type="submit" class="btn btn-primary">@((editingUser != null) ? "Update" : "Create")</button>
-    <button type="button" class="btn btn-secondary" @onclick="CancelEdit">Cancel</button>
-</form>
 
 @code {
     private List<User> users = [];

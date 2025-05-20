@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
+using SkillsTracker.Components;
 using SkillsTracker.Data;
 using SkillsTracker.Data.Repository;
 using SkillsTracker.Models;
