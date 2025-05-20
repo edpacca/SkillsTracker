@@ -1,0 +1,78 @@
+@page "/admin-users"
+@inject HttpClient Http
+@using SkillsTracker.Models
+
+<h2>Admin: Manage Users</h2>
+
+@if (users == null)
+{
+    <p>Loading users...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in users)
+            {
+                <UserInfo user=@user/>
+            }
+        </tbody>
+    </table>
+}
+
+<hr />
+
+
+@code {
+    private List<User> users = [];
+    private User newUser = new User();
+    private User? editingUser;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await Http.GetFromJsonAsync<List<User>>("api/users");
+        users = response ?? [];
+    }
+
+    private async Task SaveUser()
+    {
+        if (editingUser != null)
+        {
+            await Http.PutAsJsonAsync($"api/users/{editingUser.Id}", newUser);
+        }
+        else
+        {
+            await Http.PostAsJsonAsync("api/users", newUser);
+        }
+
+        var response = await Http.GetFromJsonAsync<List<User>>("api/users");
+        users = response ?? [];
+        newUser = new User();
+        editingUser = null;
+    }
+
+    private void EditUser(User user)
+    {
+        newUser = new User { Id = user.Id, Name = user.Name };
+        editingUser = user;
+    }
+
+    private async Task DeleteUser(int userId)
+    {
+        await Http.DeleteAsync($"api/users/{userId}");
+        var response = await Http.GetFromJsonAsync<List<User>>("api/users");
+        users = response ?? [];
+    }
+
+    private void CancelEdit()
+    {
+        newUser = new User();
+        editingUser = null;
+    }
+}

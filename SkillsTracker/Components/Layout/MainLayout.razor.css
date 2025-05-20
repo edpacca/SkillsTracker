@@ -1,0 +1,21 @@
+.page {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+.top-bar {
+    padding: 1em;
+    display: flex;
+    flex-direction: row;
+    background-color: antiquewhite;
+}
+
+.content {
+    padding: 2em;
+    background-color: white;
+}

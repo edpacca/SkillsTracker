@@ -1,0 +1,11 @@
+@using SkillsTracker.Models;
+
+<tr>
+    <td>@user.Id</td>
+    <td>@user.Name</td>
+</tr>
+
+@code {
+    [Parameter]
+    public required User user { get; set; }
+}
