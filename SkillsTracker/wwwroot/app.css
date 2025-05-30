@@ -88,7 +88,7 @@ form .form-body {
     flex-direction: column;
 }
 
-.form-element input {
+input {
     padding: var(--default-padding);
     border-radius: 8px;
 }
@@ -104,8 +104,7 @@ form .form-body {
     padding: var(--default-padding);
 }
 
-.form-footer button {
-    width: 100%;
+button {
     padding: var(--default-padding);
     border-radius: 8px;
     font-weight: bold;
@@ -115,6 +114,15 @@ form .form-body {
     color: var(--dark-grey);
 }
 
-.form-footer button:hover {
+button:hover {
     background-color: var(--hl-hover);
+}
+
+.form-footer button {
+    width: 100%;
+}
+
+td input {
+    width: 100%;
+    box-sizing: border-box;
 }
