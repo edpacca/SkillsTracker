@@ -1,0 +1,120 @@
+:root {
+    --very-dark-grey: #333;
+    --dark-grey: #555;
+    --mid-grey: #ccc;
+    --light-grey: #eee;
+    --very-light-grey: #f9f9f9;
+
+    --light-text: white;
+
+    --default-padding: 10px;
+
+
+    --highlight: rgb(80, 227, 205);
+    --hl-hover: rgb(163, 249, 236);
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.text-danger {
+    color: red;
+    font-weight: bold;
+}
+
+.debug {
+    border: 2px solid magenta;
+}
+
+/* General Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid var(--dark-grey); /* Outer table border */
+    background-color: var(--very-light-grey); /* Light background */
+}
+
+/* Table Head */
+thead {
+    background-color: var(--very-dark-grey); /* Dark header */
+    color: var(--light-text);
+}
+
+/* Table Headers */
+th {
+    padding: var(--default-padding);
+    text-align: left;
+    font-size: 16px;
+}
+
+/* Table Body */
+tbody {
+    font-size: 14px;
+}
+
+/* Table Cells */
+td {
+    padding: var(--default-padding);
+    border: 1px solid var(--mid-grey); /* Cell borders */
+}
+
+/* Alternating Row Colors */
+tbody tr:nth-child(even) {
+    background-color: var(--light-grey);
+}
+
+/* Hover Effect */
+tbody.cell-hover tr:hover {
+    background-color: var(--mid-grey);
+    cursor: pointer;
+}
+
+form .form-header {
+   background-color: var(--very-dark-grey);
+   color: var(--light-text);
+   font-size: 16px;
+   padding: var(--default-padding);
+}
+
+form .form-body {
+    border: 2px solid var(--dark-grey);
+}
+
+.form-element {
+    font-size: 16px;
+    padding: var(--default-padding);
+    display: flex;
+    flex-direction: column;
+}
+
+.form-element input {
+    padding: var(--default-padding);
+    border-radius: 8px;
+}
+
+.form-element label {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.form-footer {
+    display: flex;
+    justify-content: center;
+    padding: var(--default-padding);
+}
+
+.form-footer button {
+    width: 100%;
+    padding: var(--default-padding);
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    background-color: var(--highlight);
+    border: none;
+    color: var(--dark-grey);
+}
+
+.form-footer button:hover {
+    background-color: var(--hl-hover);
+}

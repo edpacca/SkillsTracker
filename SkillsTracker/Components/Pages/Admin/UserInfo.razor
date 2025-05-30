@@ -1,0 +1,12 @@
+@namespace SkillsTracker.Components.Admin
+
+<tr>
+    <td>@user.Id</td>
+    <td>@user.Name</td>
+    <td>@user.Email</td>
+</tr>
+
+@code {
+    [Parameter]
+    public required User user { get; set; }
+}

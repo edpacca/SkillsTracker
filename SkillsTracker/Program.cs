@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
+using SkillsTracker.Components;
 using SkillsTracker.Data;
 using SkillsTracker.Data.Repository;
 using SkillsTracker.Models;
@@ -26,11 +27,21 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+builder.Services.AddScoped(sp => new HttpClient
+{
+    BaseAddress = new Uri(builder.Configuration["AppUrl"] ?? "localhost:0000"),
+});
+
+builder.Services.AddRazorComponents().AddInteractiveServerComponents();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseExceptionHandler("/Error", createScopeForErrors: true);
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
     app.MapOpenApi();
     app.MapScalarApiReference(); // endpoint at: /scalar/v1
 }
@@ -41,4 +52,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.UseAntiforgery();
+app.MapStaticAssets();
+app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
 app.Run();
