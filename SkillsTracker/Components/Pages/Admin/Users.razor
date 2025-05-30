@@ -20,7 +20,7 @@
         <tbody class="cell-hover">
             @foreach (var user in users)
             {
-                <UserInfo user=@user />
+                <UserInfo User=@user OnUserEditSubmit="SaveUser" />
             }
         </tbody>
     </table>
@@ -35,36 +35,42 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var response = await Http.GetFromJsonAsync<List<User>>("api/users");
-        users = response ?? [];
+        await RefreshUserList();
     }
 
     private async Task SaveUser(User? user)
     {
         if (user != null)
         {
-            await Http.PostAsJsonAsync("api/users", user);
-            var response = await Http.GetFromJsonAsync<List<User>>("api/users");
-            users = response ?? [];
+            var response = await Http.PostAsJsonAsync("api/users", user);
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                await RefreshUserList();
+            }
         }
     }
 
-    private void EditUser(User user)
+    private async Task EditUser(User user)
     {
-        newUser = new User { Id = user.Id, Name = user.Name };
-        editingUser = user;
+        if (user != null)
+        {
+            var url = String.Format("api/users/{0}", user.Id);
+            var response = await Http.PutAsJsonAsync(url, user);
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                await RefreshUserList();
+            }
+        }
+    }
+
+    private async Task RefreshUserList()
+    {
+        var response = await Http.GetFromJsonAsync<List<User>>("api/users");
+        users = response ?? [];
     }
 
     private async Task DeleteUser(int userId)
     {
         await Http.DeleteAsync($"api/users/{userId}");
-        var response = await Http.GetFromJsonAsync<List<User>>("api/users");
-        users = response ?? [];
-    }
-
-    private void CancelEdit()
-    {
-        newUser = new User();
-        editingUser = null;
     }
 }
