@@ -1,32 +1,31 @@
 @page "/admin-users"
 @inject HttpClient Http
-@using SkillsTracker.Models
+@rendermode InteractiveServer
 
 <h2>Admin: Manage Users</h2>
 
-@if (users == null)
-{
-    <p>Loading users...</p>
-}
-else
-{
-    <table class="table">
+<div>
+    <UserCreation OnFormSubmit="@SaveUser" />
+</div>
+<hr />
+<div>
+    <table>
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Name</th>
+                <th>Email</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="cell-hover">
             @foreach (var user in users)
             {
-                <UserInfo user=@user/>
+                <UserInfo user=@user />
             }
         </tbody>
     </table>
-}
+</div>
 
-<hr />
 
 
 @code {
@@ -40,21 +39,14 @@ else
         users = response ?? [];
     }
 
-    private async Task SaveUser()
+    private async Task SaveUser(User? user)
     {
-        if (editingUser != null)
+        if (user != null)
         {
-            await Http.PutAsJsonAsync($"api/users/{editingUser.Id}", newUser);
+            await Http.PostAsJsonAsync("api/users", user);
+            var response = await Http.GetFromJsonAsync<List<User>>("api/users");
+            users = response ?? [];
         }
-        else
-        {
-            await Http.PostAsJsonAsync("api/users", newUser);
-        }
-
-        var response = await Http.GetFromJsonAsync<List<User>>("api/users");
-        users = response ?? [];
-        newUser = new User();
-        editingUser = null;
     }
 
     private void EditUser(User user)
