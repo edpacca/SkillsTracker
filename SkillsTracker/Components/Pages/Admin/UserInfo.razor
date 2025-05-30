@@ -1,12 +1,38 @@
 @namespace SkillsTracker.Components.Admin
 
-<tr>
-    <td>@user.Id</td>
-    <td>@user.Name</td>
-    <td>@user.Email</td>
+<tr @onclick="@(() => isEditing = !isEditing)">
+    @if (isEditing)
+    {
+        <td>@User.Id </td>
+        <td>
+            <InputText id="name-1" @bind-Value="User.Name" />
+        </td>
+        <td>
+            <InputText id="email-1" @bind-Value="User.Email" />
+        </td>
+        <td><button @onclick="SubmitEditUser">Submit</button></td>
+    }
+    else
+    {
+        <td>@User.Id</td>
+        <td>@User.Name</td>
+        <td>@User.Email</td>
+    }
 </tr>
 
 @code {
     [Parameter]
-    public required User user { get; set; }
+    public required User User { get; set; }
+
+    [Parameter]
+    public EventCallback<User> OnUserEditSubmit { get; set; }
+
+    private void SubmitEditUser()
+    {
+        OnUserEditSubmit.InvokeAsync(User);
+        isEditing = false;
+    }
+
+    private bool isEditing = false;
+
 }
