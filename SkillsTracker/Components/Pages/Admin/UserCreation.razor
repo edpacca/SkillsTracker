@@ -1,4 +1,3 @@
-@using Microsoft.AspNetCore.Components.Forms
 @namespace SkillsTracker.Components.Admin
 
 <EditForm Model="User" OnSubmit="AddUser" FormName="user-creation-form">
@@ -28,6 +27,7 @@
     public EventCallback<User> OnFormSubmit { get; set; }
 
     protected override void OnInitialized() => User ??= new();
+
     private void AddUser()
     {
         OnFormSubmit.InvokeAsync(User);
