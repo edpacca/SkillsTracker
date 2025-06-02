@@ -2,10 +2,17 @@
 @inject HttpClient Http
 @rendermode InteractiveServer
 
-<h2>Admin: Manage Users</h2>
+<h2>Admin Manage Users</h2>
 
 <div>
-    <UserCreation OnFormSubmit="@SaveUser" />
+    @if (EditingUser == null)
+    {
+    <UserCreation OnFormSubmit=@SaveUser/>
+    }
+    else
+    {
+       <UserEdit User=@EditingUser OnFormSubmit=@UpdateUser/>
+    }
 </div>
 <hr />
 <div>
@@ -20,7 +27,7 @@
         <tbody class="cell-hover">
             @foreach (var user in users)
             {
-                <UserInfo User=@user OnUserEditSubmit="SaveUser" />
+                <UserInfo User=@user OnEditUser=@SetEditUser />
             }
         </tbody>
     </table>
@@ -30,8 +37,13 @@
 
 @code {
     private List<User> users = [];
-    private User newUser = new User();
-    private User? editingUser;
+
+    private User? EditingUser = null;
+
+    private void SetEditUser(User user)
+    {
+        EditingUser = user;
+    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -50,7 +62,7 @@
         }
     }
 
-    private async Task EditUser(User user)
+    private async Task UpdateUser(User user)
     {
         if (user != null)
         {
@@ -59,6 +71,7 @@
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 await RefreshUserList();
+                EditingUser = null;
             }
         }
     }

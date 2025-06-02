@@ -1,0 +1,36 @@
+@namespace SkillsTracker.Components.Admin
+
+<EditForm Model=@User OnSubmit=@EditUser FormName="user-edit-form">
+    <div class="form-header">
+        Edit User
+    </div>
+    <div class="form-body">
+        <div class="form-element">
+            <label for="name">Name</label>
+            <InputText id="name" @bind-Value=User!.Name />
+        </div>
+        <div class="form-element">
+            <label for="email">Email</label>
+            <InputText id="email" @bind-Value=User!.Email />
+        </div>
+        <div class="form-footer">
+            <button type="submit">UPDATE</button>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    [Parameter]
+    public User? User { get; set; }
+
+    [Parameter]
+    public EventCallback<User> OnFormSubmit { get; set; }
+
+    protected override void OnInitialized() => User ??= new();
+
+    private void EditUser()
+    {
+        OnFormSubmit.InvokeAsync(User);
+        User = new();
+    }
+}
