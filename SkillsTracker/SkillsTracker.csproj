@@ -6,6 +6,8 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- Runtime Dependencies -->
+    <PackageReference Include="Bogus" Version="35.6.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid" Version="9.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="9.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.4" />
