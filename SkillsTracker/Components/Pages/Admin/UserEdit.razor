@@ -1,6 +1,6 @@
-@namespace SkillsTracker.Components.Admin
+@namespace Admin
 
-<EditForm Model=@User OnSubmit=@EditUser FormName="user-edit-form">
+<EditForm Model=@User OnSubmit=@EditUser onreset="@OnFormCancel" FormName="user-edit-form">
     <div class="form-header">
         Edit User
     </div>
@@ -15,6 +15,7 @@
         </div>
         <div class="form-footer">
             <button type="submit">UPDATE</button>
+            <button class="danger" type="reset">CANCEL</button>
         </div>
     </div>
 </EditForm>
@@ -26,11 +27,20 @@
     [Parameter]
     public EventCallback<User> OnFormSubmit { get; set; }
 
+    [Parameter]
+    public EventCallback OnFormCancel { get; set; }
+
     protected override void OnInitialized() => User ??= new();
 
     private void EditUser()
     {
         OnFormSubmit.InvokeAsync(User);
+        User = new();
+    }
+
+    private void CancelEdit()
+    {
+        OnFormCancel.InvokeAsync();
         User = new();
     }
 }
