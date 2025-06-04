@@ -73,7 +73,7 @@ public class UserController : ControllerBase
         try
         {
             var success = await _userService.UpdateUserAsync(id, user);
-            return success ? NoContent() : NotFound();
+            return success ? Ok() : NotFound();
         }
         catch (ArgumentException)
         {
