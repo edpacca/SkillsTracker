@@ -6,9 +6,28 @@ nav ul {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    gap: 1em;
+    margin: 0;
+    padding: 0;
 }
 
 nav ul li {
     list-style-type: none;
+    font-weight: bold;
+    min-width: 5rem;
+    background-color: var(--very-dark-grey);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 2px solid var(--dark-grey);
+    padding: var(--default-padding);
+    border-radius: 8px 8px 0 0;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+nav ul li:hover {
+    background-color: var(--dark-grey);
 }

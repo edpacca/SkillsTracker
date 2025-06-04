@@ -9,10 +9,9 @@ main {
 }
 
 .top-bar {
-    padding: 1em;
-    display: flex;
-    flex-direction: row;
-    background-color: antiquewhite;
+    background-color: var(--light-grey);
+    padding-top: 1em;
+    padding-left: 1em;
 }
 
 .content {
