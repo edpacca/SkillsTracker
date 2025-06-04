@@ -1,48 +1,59 @@
 @page "/admin-users"
 @inject HttpClient Http
 @rendermode InteractiveServer
+@namespace Admin
 
 <h2>Admin Manage Users</h2>
 
-<div>
-    @if (EditingUser == null)
-    {
-    <UserCreation OnFormSubmit=@SaveUser/>
-    }
-    else
-    {
-       <UserEdit User=@EditingUser OnFormSubmit=@UpdateUser/>
-    }
+<div class="flex-center">
+    <div class="w-100">
+        @if (EditingUser == null)
+        {
+            <UserCreation OnFormSubmit=@SaveUser />
+        }
+        else
+        {
+            <UserEdit User=@EditingUser OnFormSubmit=@UpdateUser OnFormCancel=@OnEditCancel />
+        }
+    </div>
+    <hr />
+    <QuickGrid Items="users.AsQueryable()">
+        <PropertyColumn Property="@(user => user.Id)" Title="ID" Sortable="true" />
+        <PropertyColumn Property="@(user => user.Name)" Title="Name" Sortable="true" />
+        <PropertyColumn Property="@(user => user.Email)" Title="Email" Sortable="true" />
+        <TemplateColumn Title="Actions" Context="user">
+            <button class="btn btn-primary btn-sm mx-1" @onclick="() => OnEdit(user)">Edit</button>
+        </TemplateColumn>
+        <TemplateColumn Title="Actions" Context="user">
+            <button class="btn btn-danger btn-sm mx-1" @onclick="() => OnDelete(user)">Delete</button>
+        </TemplateColumn>
+    </QuickGrid>
 </div>
-<hr />
-<div>
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Email</th>
-            </tr>
-        </thead>
-        <tbody class="cell-hover">
-            @foreach (var user in users)
-            {
-                <UserInfo User=@user OnEditUser=@SetEditUser />
-            }
-        </tbody>
-    </table>
-</div>
-
-
 
 @code {
     private List<User> users = [];
 
     private User? EditingUser = null;
 
-    private void SetEditUser(User user)
+    private const string baseApiUrl = "api/users";
+    private static string ApiUrlWithId(int userId)
+    {
+        return String.Format("{0}/{1}", baseApiUrl, userId);
+    }
+
+    private void OnEditCancel()
+    {
+        EditingUser = null;
+    }
+
+    private void OnEdit(User user)
     {
         EditingUser = user;
+    }
+
+    private async Task OnDelete(User user)
+    {
+        await DeleteUser(user.Id);
     }
 
     protected override async Task OnInitializedAsync()
@@ -54,7 +65,7 @@
     {
         if (user != null)
         {
-            var response = await Http.PostAsJsonAsync("api/users", user);
+            var response = await Http.PostAsJsonAsync(baseApiUrl, user);
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 await RefreshUserList();
@@ -66,8 +77,7 @@
     {
         if (user != null)
         {
-            var url = String.Format("api/users/{0}", user.Id);
-            var response = await Http.PutAsJsonAsync(url, user);
+            var response = await Http.PutAsJsonAsync(ApiUrlWithId(user.Id), user);
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 await RefreshUserList();
@@ -78,12 +88,16 @@
 
     private async Task RefreshUserList()
     {
-        var response = await Http.GetFromJsonAsync<List<User>>("api/users");
+        var response = await Http.GetFromJsonAsync<List<User>>(baseApiUrl);
         users = response ?? [];
     }
 
     private async Task DeleteUser(int userId)
     {
-        await Http.DeleteAsync($"api/users/{userId}");
+        var response = await Http.DeleteAsync(ApiUrlWithId(userId));
+        if (response.StatusCode == HttpStatusCode.NoContent)
+        {
+            await RefreshUserList();
+        }
     }
 }
