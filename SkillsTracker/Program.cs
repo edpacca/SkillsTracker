@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using MudBlazor.Services;
 using Scalar.AspNetCore;
 using SkillsTracker.Components;
 using SkillsTracker.Data;
@@ -26,6 +27,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddMudServices();
 
 builder.Services.AddScoped(sp => new HttpClient
 {
