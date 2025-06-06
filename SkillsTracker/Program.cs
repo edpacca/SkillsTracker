@@ -1,11 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using MudBlazor.Services;
 using Scalar.AspNetCore;
-using SkillsTracker.Components;
 using SkillsTracker.Data;
 using SkillsTracker.Data.Repository;
 using SkillsTracker.Models;
 using SkillsTracker.Services;
+using SkillsTracker.ViewModels;
+using SkillsTracker.Views;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,8 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ISkillService, SkillService>();
 builder.Services.AddScoped<ITopicService, TopicService>();
 builder.Services.AddScoped<ILevelService, LevelService>();
+
+builder.Services.AddScoped<UsersViewModel>();
 
 builder.Services.AddControllers();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
