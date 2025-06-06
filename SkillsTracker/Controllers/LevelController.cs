@@ -6,7 +6,7 @@ using SkillsTracker.Services;
 
 namespace SkillsTracker.Controllers;
 
-[Route("levels")]
+[Route("api/levels")]
 [ApiController]
 public class LevelController : ControllerBase
 {

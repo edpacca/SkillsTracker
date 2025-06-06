@@ -10,6 +10,7 @@ public class User
     [Required]
     [MaxLength(100)]
     public string? Name { get; set; }
+    public string? Email { get; set; }
 
     [JsonIgnore]
     public IList<UserSkill> UserSkills { get; set; } = [];

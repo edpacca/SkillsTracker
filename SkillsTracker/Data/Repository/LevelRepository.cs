@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SkillsTracker.Models;
+using SkillsTracker.Models.DTOs;
 
 namespace SkillsTracker.Data.Repository;
 
@@ -48,5 +49,10 @@ public class LevelRepository : IRepository<Level>
     public async Task<bool> ExistsAsync(int id)
     {
         return await _context.Levels.AsNoTracking().AnyAsync(l => l.Id == id);
+    }
+
+    public Task<PagedResponse<Level>> GetAllPagedAsync(int page, int size, string sortBy, bool asc)
+    {
+        throw new NotImplementedException();
     }
 }

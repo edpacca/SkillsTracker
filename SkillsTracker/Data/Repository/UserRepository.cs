@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using MudBlazor;
 using SkillsTracker.Models;
+using SkillsTracker.Models.DTOs;
 
 namespace SkillsTracker.Data.Repository;
 
@@ -48,5 +50,25 @@ public class UserRepository : IRepository<User>
     public async Task<bool> ExistsAsync(int id)
     {
         return await _context.Users.AsNoTracking().AnyAsync(u => u.Id == id);
+    }
+
+    public async Task<PagedResponse<User>> GetAllPagedAsync(
+        int page,
+        int size,
+        string sortBy,
+        bool asc = true
+    )
+    {
+        var query = _context.Users.AsQueryable();
+
+        if (!string.IsNullOrEmpty(sortBy))
+        {
+            query = asc ? query.OrderBy(u => u.Id) : query.OrderByDescending(u => u.Id);
+        }
+
+        var totalCount = await query.CountAsync();
+        var users = await query.Skip(page * size).Take(size).ToListAsync();
+
+        return new PagedResponse<User> { Data = users, TotalCount = totalCount };
     }
 }

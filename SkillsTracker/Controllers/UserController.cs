@@ -2,11 +2,12 @@ using System.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SkillsTracker.Models;
+using SkillsTracker.Models.DTOs;
 using SkillsTracker.Services;
 
 namespace SkillsTracker.Controllers;
 
-[Route("users")]
+[Route("api/users")]
 [ApiController]
 public class UserController : ControllerBase
 {
@@ -18,11 +19,16 @@ public class UserController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+    public async Task<ActionResult<PagedResponse<User>>> GetUsers(
+        int page = 0,
+        int size = 10,
+        string sortBy = "Id",
+        bool asc = true
+    )
     {
         try
         {
-            var users = await _userService.GetUsersAsync();
+            var users = await _userService.GetUsersAsync(page, size, sortBy, asc);
             return Ok(users);
         }
         catch
@@ -73,7 +79,7 @@ public class UserController : ControllerBase
         try
         {
             var success = await _userService.UpdateUserAsync(id, user);
-            return success ? NoContent() : NotFound();
+            return success ? Ok() : NotFound();
         }
         catch (ArgumentException)
         {

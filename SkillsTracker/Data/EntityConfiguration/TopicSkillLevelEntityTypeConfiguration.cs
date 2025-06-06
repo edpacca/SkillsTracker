@@ -20,7 +20,7 @@ class TopicSkillLevelEntityTypeConfiguration : IEntityTypeConfiguration<TopicSki
 
         builder
             .HasOne(tsl => tsl.Skill)
-            .WithMany(s => s.TopicLevelSkills)
+            .WithMany(s => s.TopicSkillLevels)
             .HasForeignKey(tsl => tsl.SkillId);
 
         builder.HasOne(tsl => tsl.Level).WithMany().HasForeignKey(tsl => tsl.LevelId);
