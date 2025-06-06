@@ -1,0 +1,19 @@
+@page "/admin-users"
+@rendermode InteractiveServer
+<MudContainer>
+
+    <MudText Typo="Typo.h2">Admin - Manage Users</MudText>
+        <div class="flex-center"></div>
+        <div class="w-100">
+            @* @if (EditingUser == null)
+            {
+                <UserCreation OnFormSubmit=@SaveUser />
+            }
+            else
+            {
+                <UserEdit User=@EditingUser OnFormSubmit=@UpdateUser OnFormCancel=@OnEditCancel />
+            } *@
+        </div>
+        <hr />
+<div class="flex-center"><UserTable/></div>
+</MudContainer>

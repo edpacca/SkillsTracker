@@ -1,52 +1,34 @@
-@page "/admin-users"
-@rendermode InteractiveServer
 @inject HttpClient Http
-@namespace Admin
+@inject UsersViewModel ViewModel
+@namespace SkillsTracker.Views.Components
 
-<MudContainer>
 
-    <MudText Typo="Typo.h2">Admin - Manage Users</MudText>
-
-    <div class="flex-center">
-        <div class="w-100">
-            @if (EditingUser == null)
-            {
-                <UserCreation OnFormSubmit=@SaveUser />
-            }
-            else
-            {
-                <UserEdit User=@EditingUser OnFormSubmit=@UpdateUser OnFormCancel=@OnEditCancel />
-            }
-        </div>
-        <hr />
-        <MudDataGrid T="User" ServerData="LoadUserData" Bordered=true Dense=true Striped=true RowsPerPage="10">
-            <Header>
-                <MudTh></MudTh>
-                <MudTh>Id</MudTh>
-                <MudTh>Name</MudTh>
-                <MudTh>Email</MudTh>
-                <MudTh>Actions</MudTh>
-            </Header>
-            <Columns>
-                <SelectColumn T="User" />
-                <PropertyColumn Property="user => user.Id" Title="ID" Sortable="true" />
-                <PropertyColumn Property="user => user.Name" Title="Name" Sortable="true" />
-                <PropertyColumn Property="user => user.Email" Title="Email" Sortable="true" />
-                @* <TemplateColumn Title="Actions" Context="user">
+<MudDataGrid T="User" ServerData="@ViewModel.LoadUsers" Bordered=true Dense=true Striped=true RowsPerPage="10">
+    <Header>
+        <MudTh></MudTh>
+        <MudTh>Id</MudTh>
+        <MudTh>Name</MudTh>
+        <MudTh>Email</MudTh>
+        <MudTh>Actions</MudTh>
+    </Header>
+    <Columns>
+        <SelectColumn T="User" />
+        <PropertyColumn Property="user => user.Id" Title="ID" Sortable="true" />
+        <PropertyColumn Property="user => user.Name" Title="Name" Sortable="true" />
+        <PropertyColumn Property="user => user.Email" Title="Email" Sortable="true" />
+        @* <TemplateColumn Title="Actions" Context="user">
                 <MudButton OnClick="@() => OnEdit(user)">Edit</MudButton>
             </TemplateColumn>
             <TemplateColumn Title="Actions" Context="user">
                 <button class="btn btn-danger btn-sm mx-1" @onclick="() => OnDelete(user)">Delete</button>
             </TemplateColumn> *@
-            </Columns>
-            <PagerContent>
-                <MudDataGridPager T="User" />
-            </PagerContent>
-        </MudDataGrid>
-    </div>
+    </Columns>
+    <PagerContent>
+        <MudDataGridPager T="User" />
+    </PagerContent>
+</MudDataGrid>
 
-</MudContainer>
-@code {
+@* @code {
     private List<User> users = [];
 
     private User? EditingUser = null;
@@ -100,14 +82,15 @@
         var queryUrl = $"{baseApiUrl}?page={page}&size={pageSize}&sortBy=Id&asc=true";
         var response = await Http.GetFromJsonAsync<PagedResponse<User>>(queryUrl);
         if (response == null)
-        {
-            return new GridData<User> { Items = [], TotalItems = 0 };
-        }
-        return new GridData<User> { Items =  response.Data ?? [], TotalItems = response.TotalCount };
+    using SkillsTracker.ViewModels;
+#line default
+#line hidden
+    }
+        return new GridData<User> { Items = response.Data ?? [], TotalItems = response.TotalCount };
     }
 
     private async Task DeleteUser(int userId)
     {
         var response = await Http.DeleteAsync(ApiUrlWithId(userId));
     }
-}
+} *@
