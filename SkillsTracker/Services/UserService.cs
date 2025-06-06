@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SkillsTracker.Data.Repository;
 using SkillsTracker.Models;
+using SkillsTracker.Models.DTOs;
 
 namespace SkillsTracker.Services;
 
@@ -13,11 +14,16 @@ public class UserService : IUserService
         _repository = repository;
     }
 
-    public async Task<IEnumerable<User>> GetUsersAsync()
+    public async Task<PagedResponse<User>> GetUsersAsync(
+        int page = 0,
+        int size = 10,
+        string sortBy = "Id",
+        bool asc = true
+    )
     {
         try
         {
-            return await _repository.GetAllAsync();
+            return await _repository.GetAllPagedAsync(page, size, sortBy, asc);
         }
         catch (Exception ex)
         {
