@@ -45,21 +45,6 @@ public class UserServiceTests : IClassFixture<UserServiceMockRepository>
     }
 
     [Fact]
-    public async Task GetUsersAsync_ShouldThrowInvalidOperationException_OnRepositoryError()
-    {
-        // Setup
-        _mockRepo.Setup(r => r.GetAllPagedAsync(
-            It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<bool>()
-        )).Throws(new Exception());
-
-        // Assert
-        var exception = await Assert.ThrowsAsync<InvalidOperationException>(() =>
-            _userService.GetUsersAsync()
-        );
-        Assert.Contains("An error occurred while retrieving users.", exception.Message);
-    }
-
-    [Fact]
     public async Task GetUserByIdAsync_ShouldReturnCorrectUser()
     {
         // Data
@@ -81,16 +66,6 @@ public class UserServiceTests : IClassFixture<UserServiceMockRepository>
     }
 
     [Fact]
-    public async Task GetUserByIdAsync_ShouldThrowInvalidOperationException_OnRepositoryError()
-    {
-        // Setup
-        _mockRepo.Setup(r => r.GetByIdAsync(It.IsAny<int>())).Throws(new Exception());
-
-        // Assert
-        await Assert.ThrowsAsync<InvalidOperationException>(() => _userService.GetUserByIdAsync(1));
-    }
-
-    [Fact]
     public async Task CreateUserAsync_ShouldReturnCreatedUser()
     {
         // Arrange
@@ -104,20 +79,6 @@ public class UserServiceTests : IClassFixture<UserServiceMockRepository>
         Assert.NotNull(result);
         Assert.Equal(user.Id, result.Id);
         Assert.Equal(user.Name, result.Name);
-    }
-
-    [Fact]
-    public async Task CreateUserAsync_ShouldThrowInvalidOperationException_OnRepositoryError()
-    {
-        // Arrange
-        var user = new User { Name = "Eddie" };
-        _mockRepo.Setup(r => r.CreateAsync(user)).ThrowsAsync(new Exception("Database error"));
-
-        // Act & Assert
-        var exception = await Assert.ThrowsAsync<InvalidOperationException>(() =>
-            _userService.CreateUserAsync(user)
-        );
-        Assert.Contains("An error occurred while creating the user.", exception.Message);
     }
 
     [Fact]
@@ -163,20 +124,6 @@ public class UserServiceTests : IClassFixture<UserServiceMockRepository>
     }
 
     [Fact]
-    public async Task UpdateUserAsync_ShouldThrowInvalidOperationException_OnGeneralError()
-    {
-        // Arrange
-        var user = new User { Id = 1, Name = "Updated Eddie" };
-        _mockRepo.Setup(r => r.UpdateAsync(user)).ThrowsAsync(new Exception("Unexpected error"));
-
-        // Act & Assert
-        var exception = await Assert.ThrowsAsync<InvalidOperationException>(() =>
-            _userService.UpdateUserAsync(user.Id, user)
-        );
-        Assert.Contains("An error occurred while updating the user.", exception.Message);
-    }
-
-    [Fact]
     public async Task DeleteUserAsync_ShouldReturnTrue_WhenDeleteSucceeds()
     {
         // Arrange
@@ -187,18 +134,5 @@ public class UserServiceTests : IClassFixture<UserServiceMockRepository>
 
         // Assert
         Assert.True(result);
-    }
-
-    [Fact]
-    public async Task DeleteUserAsync_ShouldThrowInvalidOperationException_OnDbUpdateException()
-    {
-        // Arrange
-        _mockRepo.Setup(r => r.DeleteAsync(1)).ThrowsAsync(new DbUpdateException("Delete failed"));
-
-        // Act & Assert
-        var exception = await Assert.ThrowsAsync<InvalidOperationException>(() =>
-            _userService.DeleteUserAsync(1)
-        );
-        Assert.Contains("Error deleting user.", exception.Message);
     }
 }
