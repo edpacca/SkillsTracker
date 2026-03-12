@@ -1,10 +1,11 @@
 using SkillsTracker.Models;
+using SkillsTracker.Models.DTOs;
 
 namespace SkillsTracker.Services;
 
 public interface IUserService
 {
-    Task<IEnumerable<User>> GetUsersAsync();
+    Task<PagedResponse<User>> GetUsersAsync(int page = 0, int size = 10, string sortBy = "Id", bool asc = true);
 
     Task<User?> GetUserByIdAsync(int id);
 

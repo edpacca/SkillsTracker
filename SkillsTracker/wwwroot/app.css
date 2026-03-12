@@ -1,0 +1,15 @@
+:root {
+    --very-dark-grey: #333;
+    --dark-grey: #555;
+    --mid-grey: #ccc;
+    --light-grey: #eee;
+    --very-light-grey: #f9f9f9;
+
+    --light-text: white;
+
+    --default-padding: 10px;
+
+
+    --highlight: rgb(80, 227, 205);
+    --hl-hover: rgb(163, 249, 236);
+}

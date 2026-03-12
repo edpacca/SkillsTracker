@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using SkillsTracker.Models;
+using SkillsTracker.Models.DTOs;
 
 namespace SkillsTracker.Data.Repository;
 
-public class UserRepository : IRepository<User>
+public class UserRepository : IPagedRepository<User>
 {
     private readonly ApplicationDbContext _context;
 
@@ -48,5 +49,27 @@ public class UserRepository : IRepository<User>
     public async Task<bool> ExistsAsync(int id)
     {
         return await _context.Users.AsNoTracking().AnyAsync(u => u.Id == id);
+    }
+
+    public async Task<PagedResponse<User>> GetAllPagedAsync(
+        int page,
+        int size,
+        string sortBy,
+        bool asc = true
+    )
+    {
+        var query = _context.Users.AsQueryable();
+
+        query = sortBy.ToLower() switch
+        {
+            "name"  => asc ? query.OrderBy(u => u.Name)  : query.OrderByDescending(u => u.Name),
+            "email" => asc ? query.OrderBy(u => u.Email) : query.OrderByDescending(u => u.Email),
+            _       => asc ? query.OrderBy(u => u.Id)    : query.OrderByDescending(u => u.Id),
+        };
+
+        var totalCount = await query.CountAsync();
+        var users = await query.Skip(page * size).Take(size).ToListAsync();
+
+        return new PagedResponse<User> { Data = users, TotalCount = totalCount };
     }
 }

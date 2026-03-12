@@ -49,4 +49,5 @@ public class SkillRepository : IRepository<Skill>
     {
         return await _context.Skills.AsNoTracking().AnyAsync(s => s.Id == id);
     }
+
 }

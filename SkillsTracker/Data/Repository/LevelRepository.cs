@@ -49,4 +49,5 @@ public class LevelRepository : IRepository<Level>
     {
         return await _context.Levels.AsNoTracking().AnyAsync(l => l.Id == id);
     }
+
 }
