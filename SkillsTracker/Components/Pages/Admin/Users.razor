@@ -93,12 +93,12 @@
     }
 
 
-    private async Task<GridData<User>> LoadUserData(GridState<User> state)
+    private async Task<GridData<User>> LoadUserData(GridState<User> state, CancellationToken ct)
     {
         var page = state.Page;
         var pageSize = state.PageSize;
         var queryUrl = $"{baseApiUrl}?page={page}&size={pageSize}&sortBy=Id&asc=true";
-        var response = await Http.GetFromJsonAsync<PagedResponse<User>>(queryUrl);
+        var response = await Http.GetFromJsonAsync<PagedResponse<User>>(queryUrl, cancellationToken: ct);
         if (response == null)
         {
             return new GridData<User> { Items = [], TotalItems = 0 };
