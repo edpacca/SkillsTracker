@@ -13,6 +13,7 @@ namespace SkillsTracker.Data
         public DbSet<Level> Levels { get; set; }
 
         public DbSet<UserSkill> UserSkills { get; set; }
+        public DbSet<TopicSkillLevel> TopicSkillLevels { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
