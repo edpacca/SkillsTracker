@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Moq;
 using SkillsTracker.Data.Repository;
 using SkillsTracker.Models;
+using SkillsTracker.Models.DTOs;
 using SkillsTracker.Services;
 using SkillsTracker.Tests.UnitTests.Fixtures;
 
@@ -23,29 +24,37 @@ public class UserServiceTests : IClassFixture<UserServiceMockRepository>
     {
         // Data
         string[] names = ["Brandon", "Alexa", "Sally", "Jon"];
-        var users = names.Select(name => new User { Name = name }).ToList().AsQueryable();
+        var users = names.Select(name => new User { Name = name }).ToList();
+        var pagedResponse = new PagedResponse<User>()
+        {
+            Data = users,
+            TotalCount = 4
+        };
 
         // Setup
-        _mockRepo.Setup(r => r.GetAllAsync()).ReturnsAsync(users);
+        _mockRepo.Setup(r => r.GetAllPagedAsync(
+            It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<bool>()
+            )).ReturnsAsync(pagedResponse);
 
         // Act
         var result = await _userService.GetUsersAsync();
 
         // Assert
-        Assert.Equal(4, result.Count());
-        foreach (var name in names)
-            Assert.Contains(result, u => u.Name == name);
+        Assert.Equal(4, result.TotalCount);
+        Assert.Equal(names, result.Data.Select(x => x.Name));
     }
 
     [Fact]
     public async Task GetUsersAsync_ShouldThrowInvalidOperationException_OnRepositoryError()
     {
         // Setup
-        _mockRepo.Setup(r => r.GetAllAsync()).Throws(new Exception());
+        _mockRepo.Setup(r => r.GetAllPagedAsync(
+            It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<bool>()
+        )).Throws(new Exception());
 
         // Assert
-        var exception = await Assert.ThrowsAsync<InvalidOperationException>(
-            _userService.GetUsersAsync
+        var exception = await Assert.ThrowsAsync<InvalidOperationException>(() =>
+            _userService.GetUsersAsync()
         );
         Assert.Contains("An error occurred while retrieving users.", exception.Message);
     }
