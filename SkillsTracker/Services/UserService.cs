@@ -7,9 +7,9 @@ namespace SkillsTracker.Services;
 
 public class UserService : IUserService
 {
-    private readonly IRepository<User> _repository;
+    private readonly IPagedRepository<User> _repository;
 
-    public UserService(IRepository<User> repository)
+    public UserService(IPagedRepository<User> repository)
     {
         _repository = repository;
     }

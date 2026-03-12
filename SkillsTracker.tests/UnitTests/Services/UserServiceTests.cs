@@ -9,7 +9,7 @@ namespace SkillsTracker.Tests.UnitTests.Services;
 
 public class UserServiceTests : IClassFixture<UserServiceMockRepository>
 {
-    private readonly Mock<IRepository<User>> _mockRepo;
+    private readonly Mock<IPagedRepository<User>> _mockRepo;
     private readonly UserService _userService;
 
     public UserServiceTests(UserServiceMockRepository serviceRepoFixture)

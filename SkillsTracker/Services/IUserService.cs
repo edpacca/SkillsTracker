@@ -5,7 +5,7 @@ namespace SkillsTracker.Services;
 
 public interface IUserService
 {
-    Task<PagedResponse<User>> GetUsersAsync(int page, int size, string sortBy, bool asc);
+    Task<PagedResponse<User>> GetUsersAsync(int page = 0, int size = 10, string sortBy = "Id", bool asc = true);
 
     Task<User?> GetUserByIdAsync(int id);
 

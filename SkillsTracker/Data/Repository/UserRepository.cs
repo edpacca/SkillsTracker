@@ -1,11 +1,10 @@
 using Microsoft.EntityFrameworkCore;
-using MudBlazor;
 using SkillsTracker.Models;
 using SkillsTracker.Models.DTOs;
 
 namespace SkillsTracker.Data.Repository;
 
-public class UserRepository : IRepository<User>
+public class UserRepository : IPagedRepository<User>
 {
     private readonly ApplicationDbContext _context;
 
@@ -61,10 +60,12 @@ public class UserRepository : IRepository<User>
     {
         var query = _context.Users.AsQueryable();
 
-        if (!string.IsNullOrEmpty(sortBy))
+        query = sortBy.ToLower() switch
         {
-            query = asc ? query.OrderBy(u => u.Id) : query.OrderByDescending(u => u.Id);
-        }
+            "name"  => asc ? query.OrderBy(u => u.Name)  : query.OrderByDescending(u => u.Name),
+            "email" => asc ? query.OrderBy(u => u.Email) : query.OrderByDescending(u => u.Email),
+            _       => asc ? query.OrderBy(u => u.Id)    : query.OrderByDescending(u => u.Id),
+        };
 
         var totalCount = await query.CountAsync();
         var users = await query.Skip(page * size).Take(size).ToListAsync();

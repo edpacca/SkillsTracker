@@ -8,12 +8,12 @@ namespace SkillsTracker.Tests.UnitTests.Fixtures;
 
 public class UserServiceMockRepository
 {
-    public Mock<IRepository<User>> MockRepo { get; set; }
+    public Mock<IPagedRepository<User>> MockRepo { get; set; }
     public UserService UserService { get; set; }
 
     public UserServiceMockRepository()
     {
-        MockRepo = new Mock<IRepository<User>>();
+        MockRepo = new Mock<IPagedRepository<User>>();
         UserService = new UserService(MockRepo.Object);
     }
 }
