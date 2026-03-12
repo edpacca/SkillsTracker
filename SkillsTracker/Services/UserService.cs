@@ -5,58 +5,20 @@ using SkillsTracker.Models.DTOs;
 
 namespace SkillsTracker.Services;
 
-public class UserService : IUserService
+public class UserService(IPagedRepository<User> repository) : IUserService
 {
-    private readonly IPagedRepository<User> _repository;
-
-    public UserService(IPagedRepository<User> repository)
-    {
-        _repository = repository;
-    }
-
     public async Task<PagedResponse<User>> GetUsersAsync(
         int page = 0,
         int size = 10,
         string sortBy = "Id",
         bool asc = true
-    )
-    {
-        try
-        {
-            return await _repository.GetAllPagedAsync(page, size, sortBy, asc);
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException("An error occurred while retrieving users.", ex);
-        }
-    }
+    ) => await repository.GetAllPagedAsync(page, size, sortBy, asc);
 
-    public async Task<User?> GetUserByIdAsync(int id)
-    {
-        try
-        {
-            return await _repository.GetByIdAsync(id);
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException(
-                $"An error occurred while retrieving user with ID {id}.",
-                ex
-            );
-        }
-    }
+    public async Task<User?> GetUserByIdAsync(int id) =>
+        await repository.GetByIdAsync(id);
 
-    public async Task<User> CreateUserAsync(User user)
-    {
-        try
-        {
-            return await _repository.CreateAsync(user);
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException("An error occurred while creating the user.", ex);
-        }
-    }
+    public async Task<User> CreateUserAsync(User user) =>
+        await repository.CreateAsync(user);
 
     public async Task<bool> UpdateUserAsync(int id, User user)
     {
@@ -65,29 +27,16 @@ public class UserService : IUserService
 
         try
         {
-            return await _repository.UpdateAsync(user);
+            return await repository.UpdateAsync(user);
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!await _repository.ExistsAsync(id))
+            if (!await repository.ExistsAsync(id))
                 throw new KeyNotFoundException("User not found.");
-            throw; // Bubble up for logging
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException("An error occurred while updating the user.", ex);
+            throw;
         }
     }
 
-    public async Task<bool> DeleteUserAsync(int id)
-    {
-        try
-        {
-            return await _repository.DeleteAsync(id);
-        }
-        catch (DbUpdateException ex)
-        {
-            throw new InvalidOperationException("Error deleting user.", ex);
-        }
-    }
+    public async Task<bool> DeleteUserAsync(int id) =>
+        await repository.DeleteAsync(id);
 }

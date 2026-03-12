@@ -4,53 +4,16 @@ using SkillsTracker.Models;
 
 namespace SkillsTracker.Services;
 
-public class TopicService : ITopicService
+public class TopicService(IRepository<Topic> repository) : ITopicService
 {
-    private readonly IRepository<Topic> _repository;
+    public async Task<IEnumerable<Topic>> GetTopicsAsync() =>
+        await repository.GetAllAsync();
 
-    public TopicService(IRepository<Topic> repository)
-    {
-        _repository = repository;
-    }
+    public async Task<Topic?> GetTopicByIdAsync(int id) =>
+        await repository.GetByIdAsync(id);
 
-    public async Task<IEnumerable<Topic>> GetTopicsAsync()
-    {
-        try
-        {
-            return await _repository.GetAllAsync();
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException("An error occurred while retrieving topics.", ex);
-        }
-    }
-
-    public async Task<Topic?> GetTopicByIdAsync(int id)
-    {
-        try
-        {
-            return await _repository.GetByIdAsync(id);
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException(
-                $"An error occurred while retrieving topic with ID {id}.",
-                ex
-            );
-        }
-    }
-
-    public async Task<Topic> CreateTopicAsync(Topic topic)
-    {
-        try
-        {
-            return await _repository.CreateAsync(topic);
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException("An error occurred while creating the topic.", ex);
-        }
-    }
+    public async Task<Topic> CreateTopicAsync(Topic topic) =>
+        await repository.CreateAsync(topic);
 
     public async Task<bool> UpdateTopicAsync(int id, Topic topic)
     {
@@ -59,29 +22,16 @@ public class TopicService : ITopicService
 
         try
         {
-            return await _repository.UpdateAsync(topic);
+            return await repository.UpdateAsync(topic);
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!await _repository.ExistsAsync(id))
+            if (!await repository.ExistsAsync(id))
                 throw new KeyNotFoundException("Topic not found.");
-            throw; // Bubble up for logging
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException("An error occurred while updating the topic.", ex);
+            throw;
         }
     }
 
-    public async Task<bool> DeleteTopicAsync(int id)
-    {
-        try
-        {
-            return await _repository.DeleteAsync(id);
-        }
-        catch (DbUpdateException ex)
-        {
-            throw new InvalidOperationException("Error deleting topic.", ex);
-        }
-    }
+    public async Task<bool> DeleteTopicAsync(int id) =>
+        await repository.DeleteAsync(id);
 }

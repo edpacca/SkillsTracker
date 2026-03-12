@@ -4,53 +4,16 @@ using SkillsTracker.Models;
 
 namespace SkillsTracker.Services;
 
-public class LevelService : ILevelService
+public class LevelService(IRepository<Level> repository) : ILevelService
 {
-    private readonly IRepository<Level> _repository;
+    public async Task<IEnumerable<Level>> GetLevelsAsync() =>
+        await repository.GetAllAsync();
 
-    public LevelService(IRepository<Level> repository)
-    {
-        _repository = repository;
-    }
+    public async Task<Level?> GetLevelByIdAsync(int id) =>
+        await repository.GetByIdAsync(id);
 
-    public async Task<IEnumerable<Level>> GetLevelsAsync()
-    {
-        try
-        {
-            return await _repository.GetAllAsync();
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException("An error occurred while retrieving levels.", ex);
-        }
-    }
-
-    public async Task<Level?> GetLevelByIdAsync(int id)
-    {
-        try
-        {
-            return await _repository.GetByIdAsync(id);
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException(
-                $"An error occurred while retrieving level with ID {id}.",
-                ex
-            );
-        }
-    }
-
-    public async Task<Level> CreateLevelAsync(Level level)
-    {
-        try
-        {
-            return await _repository.CreateAsync(level);
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException("An error occurred while creating the level.", ex);
-        }
-    }
+    public async Task<Level> CreateLevelAsync(Level level) =>
+        await repository.CreateAsync(level);
 
     public async Task<bool> UpdateLevelAsync(int id, Level level)
     {
@@ -59,29 +22,16 @@ public class LevelService : ILevelService
 
         try
         {
-            return await _repository.UpdateAsync(level);
+            return await repository.UpdateAsync(level);
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!await _repository.ExistsAsync(id))
+            if (!await repository.ExistsAsync(id))
                 throw new KeyNotFoundException("Level not found.");
-            throw; // Bubble up for logging
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException("An error occurred while updating the level.", ex);
+            throw;
         }
     }
 
-    public async Task<bool> DeleteLevelAsync(int id)
-    {
-        try
-        {
-            return await _repository.DeleteAsync(id);
-        }
-        catch (DbUpdateException ex)
-        {
-            throw new InvalidOperationException("Error deleting level.", ex);
-        }
-    }
+    public async Task<bool> DeleteLevelAsync(int id) =>
+        await repository.DeleteAsync(id);
 }

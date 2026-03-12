@@ -4,6 +4,7 @@ using Scalar.AspNetCore;
 using SkillsTracker.Components;
 using SkillsTracker.Data;
 using SkillsTracker.Data.Repository;
+using SkillsTracker.Middleware;
 using SkillsTracker.Models;
 using SkillsTracker.Services;
 
@@ -49,6 +50,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseAuthorization();
 
