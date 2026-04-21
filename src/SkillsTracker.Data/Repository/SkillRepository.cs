@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using SkillsTracker.Models;
+using SkillsTracker.Core.Abstractions;
+using SkillsTracker.Core.Models;
 
 namespace SkillsTracker.Data.Repository;
 
@@ -49,5 +50,4 @@ public class SkillRepository : IRepository<Skill>
     {
         return await _context.Skills.AsNoTracking().AnyAsync(s => s.Id == id);
     }
-
 }

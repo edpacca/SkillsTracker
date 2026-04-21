@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SkillsTracker.Models;
+using SkillsTracker.Core.Models;
+
+namespace SkillsTracker.Data.EntityConfiguration;
 
 class TopicSkillLevelEntityTypeConfiguration : IEntityTypeConfiguration<TopicSkillLevel>
 {
