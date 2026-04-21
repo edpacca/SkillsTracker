@@ -1,11 +1,8 @@
-using Microsoft.EntityFrameworkCore;
 using MudBlazor.Services;
 using Scalar.AspNetCore;
 using SkillsTracker.Components;
 using SkillsTracker.Data;
-using SkillsTracker.Data.Repository;
 using SkillsTracker.Middleware;
-using SkillsTracker.Models;
 using SkillsTracker.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,18 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("PostgresConnection");
 
 // Add services to the container.
-builder.Services.AddScoped<IPagedRepository<User>, UserRepository>();
-builder.Services.AddScoped<IRepository<Skill>, SkillRepository>();
-builder.Services.AddScoped<IRepository<Topic>, TopicRepository>();
-builder.Services.AddScoped<IRepository<Level>, LevelRepository>();
-
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<ISkillService, SkillService>();
-builder.Services.AddScoped<ITopicService, TopicService>();
-builder.Services.AddScoped<ILevelService, LevelService>();
+builder.Services.AddSkillsTrackerData(connectionString!);
+builder.Services.AddSkillsTrackerServices();
 
 builder.Services.AddControllers();
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();

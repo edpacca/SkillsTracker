@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using SkillsTracker.Data.Repository;
-using SkillsTracker.Models;
+using SkillsTracker.Core.Abstractions;
+using SkillsTracker.Core.Models;
 
 namespace SkillsTracker.Services;
 
