@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using SkillsTracker.Models;
-using SkillsTracker.Services;
+using SkillsTracker.Core.Abstractions;
+using SkillsTracker.Core.Models;
 
 namespace SkillsTracker.Controllers;
 

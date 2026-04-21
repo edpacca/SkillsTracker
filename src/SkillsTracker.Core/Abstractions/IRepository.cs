@@ -1,6 +1,6 @@
-using SkillsTracker.Models.DTOs;
+using SkillsTracker.Core.DTOs;
 
-namespace SkillsTracker.Data.Repository;
+namespace SkillsTracker.Core.Abstractions;
 
 public interface IPagedRepository<T> : IRepository<T>
     where T : class

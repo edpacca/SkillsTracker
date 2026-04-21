@@ -1,6 +1,6 @@
-using SkillsTracker.Models;
+using SkillsTracker.Core.Models;
 
-namespace SkillsTracker.Services;
+namespace SkillsTracker.Core.Abstractions;
 
 public interface ITopicService
 {

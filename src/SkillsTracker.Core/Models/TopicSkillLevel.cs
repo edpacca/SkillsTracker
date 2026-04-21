@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using SkillsTracker.Enums;
+using SkillsTracker.Core.Enums;
 
-namespace SkillsTracker.Models;
+namespace SkillsTracker.Core.Models;
 
 public class TopicSkillLevel
 {

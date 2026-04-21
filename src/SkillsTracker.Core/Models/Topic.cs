@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace SkillsTracker.Models;
+namespace SkillsTracker.Core.Models;
 
 public class Topic
 {

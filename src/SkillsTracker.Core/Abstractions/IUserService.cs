@@ -1,7 +1,7 @@
-using SkillsTracker.Models;
-using SkillsTracker.Models.DTOs;
+using SkillsTracker.Core.DTOs;
+using SkillsTracker.Core.Models;
 
-namespace SkillsTracker.Services;
+namespace SkillsTracker.Core.Abstractions;
 
 public interface IUserService
 {

@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace SkillsTracker.Models;
+namespace SkillsTracker.Core.Models;
 
 public class Skill
 {
