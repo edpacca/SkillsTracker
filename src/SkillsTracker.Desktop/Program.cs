@@ -25,10 +25,15 @@ sealed class Program
 
         App.Services = services.BuildServiceProvider();
 
-        using (var scope = App.Services.CreateScope())
+        try
         {
+            using var scope = App.Services.CreateScope();
             var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             DatabaseSeeder.SeedUsers(db).GetAwaiter().GetResult();
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"[Seeder] DB unavailable, skipping seed: {ex.Message}");
         }
 
         BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
