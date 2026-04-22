@@ -1,6 +1,6 @@
 using Moq;
-using SkillsTracker.Data.Repository;
-using SkillsTracker.Models;
+using SkillsTracker.Core.Abstractions;
+using SkillsTracker.Core.Models;
 using SkillsTracker.Services;
 using Xunit;
 

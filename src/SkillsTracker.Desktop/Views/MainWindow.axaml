@@ -1,0 +1,26 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:SkillsTracker.Desktop.ViewModels"
+        xmlns:views="using:SkillsTracker.Desktop.Views"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="600"
+        x:Class="SkillsTracker.Desktop.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="SkillsTracker"
+        Width="900" Height="600">
+
+    <TabControl>
+        <TabItem Header="Users">
+            <views:UsersView DataContext="{Binding UsersViewModel}" />
+        </TabItem>
+        <TabItem Header="Skills">
+            <TextBlock Text="Coming soon" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </TabItem>
+        <TabItem Header="Topics">
+            <TextBlock Text="Coming soon" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </TabItem>
+    </TabControl>
+
+</Window>
