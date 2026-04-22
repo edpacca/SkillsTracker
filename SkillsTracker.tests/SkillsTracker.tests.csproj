@@ -6,7 +6,7 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SkillsTracker\SkillsTracker.csproj" />
+    <ProjectReference Include="..\src\SkillsTracker.Api\SkillsTracker.Api.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.2" />

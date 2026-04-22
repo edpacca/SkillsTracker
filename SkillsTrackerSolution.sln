@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkillsTracker", "SkillsTracker\SkillsTracker.csproj", "{FF2D9AA3-F372-424A-8D96-023D706D4D4F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkillsTracker.Api", "src\SkillsTracker.Api\SkillsTracker.Api.csproj", "{FF2D9AA3-F372-424A-8D96-023D706D4D4F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SkillsTracker.tests", "SkillsTracker.tests", "{3F9B8FF9-6F0B-4430-79CD-0E66335262C3}"
 EndProject
@@ -15,7 +15,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkillsTracker.Core", "src\S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkillsTracker.Data", "src\SkillsTracker.Data\SkillsTracker.Data.csproj", "{A3B7C2D1-E4F5-4A6B-9C8D-0E1F2A3B4C5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkillsTracker.Services", "src\SkillsTracker.Services\SkillsTracker.Services.csproj", "{B5C8D3E2-F6A7-4B8C-AD9E-1F2G3H4I5J6K}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkillsTracker.Services", "src\SkillsTracker.Services\SkillsTracker.Services.csproj", "{50239681-18D3-9DD5-404E-42E366ACA4D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkillsTracker.Desktop", "src\SkillsTracker.Desktop\SkillsTracker.Desktop.csproj", "{BD7FD616-EF4B-469B-8ECD-196F54F9AEA4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,26 +77,27 @@ Global
 		{A3B7C2D1-E4F5-4A6B-9C8D-0E1F2A3B4C5D}.Release|x64.Build.0 = Release|Any CPU
 		{A3B7C2D1-E4F5-4A6B-9C8D-0E1F2A3B4C5D}.Release|x86.ActiveCfg = Release|Any CPU
 		{A3B7C2D1-E4F5-4A6B-9C8D-0E1F2A3B4C5D}.Release|x86.Build.0 = Release|Any CPU
-		{B5C8D3E2-F6A7-4B8C-AD9E-1F2G3H4I5J6K}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B5C8D3E2-F6A7-4B8C-AD9E-1F2G3H4I5J6K}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B5C8D3E2-F6A7-4B8C-AD9E-1F2G3H4I5J6K}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{B5C8D3E2-F6A7-4B8C-AD9E-1F2G3H4I5J6K}.Debug|x64.Build.0 = Debug|Any CPU
-		{B5C8D3E2-F6A7-4B8C-AD9E-1F2G3H4I5J6K}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{B5C8D3E2-F6A7-4B8C-AD9E-1F2G3H4I5J6K}.Debug|x86.Build.0 = Debug|Any CPU
-		{B5C8D3E2-F6A7-4B8C-AD9E-1F2G3H4I5J6K}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B5C8D3E2-F6A7-4B8C-AD9E-1F2G3H4I5J6K}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B5C8D3E2-F6A7-4B8C-AD9E-1F2G3H4I5J6K}.Release|x64.ActiveCfg = Release|Any CPU
-		{B5C8D3E2-F6A7-4B8C-AD9E-1F2G3H4I5J6K}.Release|x64.Build.0 = Release|Any CPU
-		{B5C8D3E2-F6A7-4B8C-AD9E-1F2G3H4I5J6K}.Release|x86.ActiveCfg = Release|Any CPU
-		{B5C8D3E2-F6A7-4B8C-AD9E-1F2G3H4I5J6K}.Release|x86.Build.0 = Release|Any CPU
+		{BD7FD616-EF4B-469B-8ECD-196F54F9AEA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD7FD616-EF4B-469B-8ECD-196F54F9AEA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD7FD616-EF4B-469B-8ECD-196F54F9AEA4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BD7FD616-EF4B-469B-8ECD-196F54F9AEA4}.Debug|x64.Build.0 = Debug|Any CPU
+		{BD7FD616-EF4B-469B-8ECD-196F54F9AEA4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BD7FD616-EF4B-469B-8ECD-196F54F9AEA4}.Debug|x86.Build.0 = Debug|Any CPU
+		{BD7FD616-EF4B-469B-8ECD-196F54F9AEA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD7FD616-EF4B-469B-8ECD-196F54F9AEA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD7FD616-EF4B-469B-8ECD-196F54F9AEA4}.Release|x64.ActiveCfg = Release|Any CPU
+		{BD7FD616-EF4B-469B-8ECD-196F54F9AEA4}.Release|x64.Build.0 = Release|Any CPU
+		{BD7FD616-EF4B-469B-8ECD-196F54F9AEA4}.Release|x86.ActiveCfg = Release|Any CPU
+		{BD7FD616-EF4B-469B-8ECD-196F54F9AEA4}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{FF2D9AA3-F372-424A-8D96-023D706D4D4F} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{4AD6ECAC-B14B-41FB-B8F4-BE69CF237FFD} = {3F9B8FF9-6F0B-4430-79CD-0E66335262C3}
 		{1F2915F6-7D48-4BD6-8C0D-45FA16C5BB5C} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{A3B7C2D1-E4F5-4A6B-9C8D-0E1F2A3B4C5D} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
-		{B5C8D3E2-F6A7-4B8C-AD9E-1F2G3H4I5J6K} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+		{BD7FD616-EF4B-469B-8ECD-196F54F9AEA4} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 	EndGlobalSection
 EndGlobal
