@@ -16,10 +16,10 @@
             <views:UsersView DataContext="{Binding UsersViewModel}" />
         </TabItem>
         <TabItem Header="Skills">
-            <TextBlock Text="Coming soon" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <views:SkillsView DataContext="{Binding SkillsViewModel}" />
         </TabItem>
         <TabItem Header="Topics">
-            <TextBlock Text="Coming soon" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <views:TopicsView DataContext="{Binding TopicsViewModel}" />
         </TabItem>
     </TabControl>
 
