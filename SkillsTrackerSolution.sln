@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkillsTracker.Api", "src\Sk
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SkillsTracker.tests", "SkillsTracker.tests", "{3F9B8FF9-6F0B-4430-79CD-0E66335262C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkillsTracker.Tests", "SkillsTracker.tests\SkillsTracker.Tests.csproj", "{4AD6ECAC-B14B-41FB-B8F4-BE69CF237FFD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkillsTracker.tests", "SkillsTracker.tests\SkillsTracker.Tests.csproj", "{4AD6ECAC-B14B-41FB-B8F4-BE69CF237FFD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{827E0CD3-B72D-47B6-A68D-7590B98EB39B}"
 EndProject

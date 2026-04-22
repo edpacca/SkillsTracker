@@ -20,10 +20,10 @@ jobs:
         run: dotnet restore SkillsTrackerSolution.sln
 
       - name: Build API
-        run: dotnet build src/SkillsTracker.API/SkillsTracker.API.csproj --no-restore
+        run: dotnet build src/SkillsTracker.Api/SkillsTracker.Api.csproj --no-restore
 
       - name: Build
         run: dotnet build src/SkillsTracker.Desktop/SkillsTracker.Desktop.csproj --no-restore
 
       - name: Run tests
-        run: dotnet test --project SkillsTracker.tests/SkillsTracker.tests.csproj --no-build --verbosity normal
+        run: dotnet test SkillsTracker.tests/SkillsTracker.Tests.csproj --verbosity normal
