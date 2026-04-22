@@ -1,4 +1,5 @@
 using Avalonia;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SkillsTracker.Data;
@@ -29,7 +30,8 @@ sealed class Program
         {
             using var scope = App.Services.CreateScope();
             var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-            DatabaseSeeder.SeedUsers(db).GetAwaiter().GetResult();
+            db.Database.Migrate();
+            // DatabaseSeeder.SeedUsers(db).GetAwaiter().GetResult();
         }
         catch (Exception ex)
         {
