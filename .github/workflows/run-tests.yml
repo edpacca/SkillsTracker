@@ -17,16 +17,10 @@ jobs:
           dotnet-version: '10.0.x'
 
       - name: Restore dependencies
-        run: dotnet restore ./SkillsTracker/SkillsTracker.csproj
+        run: dotnet restore SkillsTrackerSolution.sln
 
-      - name: Restore dependencies
-        run: dotnet restore ./SkillsTracker.tests/SkillsTracker.tests.csproj
-
-      - name: Build project
-        run: dotnet build ./SkillsTracker/SkillsTracker.csproj --no-restore
-
-      - name: Build project
-        run: dotnet build ./SkillsTracker.tests/SkillsTracker.tests.csproj --no-restore
+      - name: Build
+        run: dotnet build SkillsTracker.tests/SkillsTracker.Tests.csproj --no-restore
 
       - name: Run tests
-        run: dotnet test ./SkillsTracker.tests/SkillsTracker.tests.csproj --no-build --verbosity normal
+        run: dotnet test SkillsTracker.tests/SkillsTracker.Tests.csproj --no-build --verbosity normal
