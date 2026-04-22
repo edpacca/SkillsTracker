@@ -9,18 +9,21 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: '10.0.x'
 
       - name: Restore dependencies
         run: dotnet restore SkillsTrackerSolution.sln
 
+      - name: Build API
+        run: dotnet build src/SkillsTracker.API/SkillsTracker.API.csproj --no-restore
+
       - name: Build
-        run: dotnet build SkillsTracker.tests/SkillsTracker.Tests.csproj --no-restore
+        run: dotnet build src/SkillsTracker.Desktop/SkillsTracker.Desktop.csproj --no-restore
 
       - name: Run tests
-        run: dotnet test SkillsTracker.tests/SkillsTracker.Tests.csproj --no-build --verbosity normal
+        run: dotnet test --project SkillsTracker.tests/SkillsTracker.tests.csproj --no-build --verbosity normal
