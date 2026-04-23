@@ -23,6 +23,8 @@ sealed class Program
         services.AddSkillsTrackerServices();
         services.AddSingleton<MainWindowViewModel>();
         services.AddTransient<UsersViewModel>();
+        services.AddTransient<SkillsViewModel>();
+        services.AddTransient<TopicsViewModel>();
 
         App.Services = services.BuildServiceProvider();
 
@@ -32,6 +34,7 @@ sealed class Program
             var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             db.Database.Migrate();
             // DatabaseSeeder.SeedUsers(db).GetAwaiter().GetResult();
+            DatabaseSeeder.SeedSkillsAndTopics(db).GetAwaiter().GetResult();
         }
         catch (Exception ex)
         {
