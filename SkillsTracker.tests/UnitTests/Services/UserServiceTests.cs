@@ -69,7 +69,7 @@ public class UserServiceTests : IClassFixture<UserServiceMockRepository>
     public async Task CreateUserAsync_ShouldReturnCreatedUser()
     {
         // Arrange
-        var user = new User { Username = "Eddie" };
+        var user = new User { Username = "Winston" };
         _mockRepo.Setup(r => r.CreateAsync(user)).ReturnsAsync(user);
 
         // Act
@@ -85,7 +85,7 @@ public class UserServiceTests : IClassFixture<UserServiceMockRepository>
     public async Task UpdateUserAsync_ShouldReturnTrue_WhenUpdateSucceeds()
     {
         // Arrange
-        var user = new User { Id = 1, Username = "Updated Eddie" };
+        var user = new User { Id = 1, Username = "Updated Winston" };
         _mockRepo.Setup(r => r.UpdateAsync(user)).ReturnsAsync(true);
 
         // Act
@@ -99,7 +99,7 @@ public class UserServiceTests : IClassFixture<UserServiceMockRepository>
     public async Task UpdateUserAsync_ShouldThrowArgumentException_WhenIdMismatch()
     {
         // Arrange
-        var user = new User { Id = 2, Username = "Updated Eddie" };
+        var user = new User { Id = 2, Username = "Updated Winston" };
 
         // Act & Assert
         var exception = await Assert.ThrowsAsync<ArgumentException>(() =>
@@ -112,7 +112,7 @@ public class UserServiceTests : IClassFixture<UserServiceMockRepository>
     public async Task UpdateUserAsync_ShouldThrowKeyNotFoundException_WhenUserDoesNotExist()
     {
         // Arrange
-        var user = new User { Id = 1, Username = "Updated Eddie" };
+        var user = new User { Id = 1, Username = "Updated Winston" };
         _mockRepo.Setup(r => r.UpdateAsync(user)).ThrowsAsync(new DbUpdateConcurrencyException());
         _mockRepo.Setup(r => r.ExistsAsync(user.Id)).ReturnsAsync(false);
 
