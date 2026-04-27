@@ -12,15 +12,11 @@ public static class DatabaseSeeder
             return;
 
         var faker = new Faker<User>()
-            .RuleFor(u => u.Name, f => f.Name.FullName())
-            .RuleFor(u => u.Email, f => f.Internet.Email());
+            .RuleFor(u => u.Username, f => f.Internet.UserName())
+            .RuleFor(u => u.Email, f => f.Internet.Email())
+            .RuleFor(u => u.CreatedAt, f => f.Date.Past(2).ToUniversalTime());
 
         var users = faker.Generate(count);
-
-        foreach (var user in users)
-        {
-            Console.WriteLine(user.Name);
-        }
         context.Users.AddRange(users);
         await context.SaveChangesAsync();
     }
@@ -30,144 +26,97 @@ public static class DatabaseSeeder
         if (await context.Topics.AnyAsync())
             return;
 
-        var levelNames = new[] { ("Beginner", 1), ("Intermediate", 2), ("Advanced", 3) };
-
-        var topicNames = new[]
-        {
-            "Frontend Development",
-            "Backend Development",
-            "DevOps",
-            "Data Engineering",
-            "Cloud Computing",
-        };
-
-        var topics = topicNames.Select(name => new Topic { Name = name }).ToList();
-        context.Topics.AddRange(topics);
-        await context.SaveChangesAsync();
-
-        var levels = topics
-            .SelectMany(t => levelNames.Select(l => new Level
-            {
-                Name = l.Item1,
-                Value = l.Item2,
-                TopicId = t.Id,
-            }))
-            .ToList();
+        var levelDefs = new[] { ("Beginner", 1), ("Intermediate", 2), ("Advanced", 3) };
+        var levels = levelDefs.Select(l => new Level { Name = l.Item1, SortOrder = l.Item2 }).ToList();
         context.Levels.AddRange(levels);
         await context.SaveChangesAsync();
 
-        Level LevelFor(Topic t, string name) =>
-            levels.First(l => l.TopicId == t.Id && l.Name == name);
+        var topicDefs = new[]
+        {
+            ("Frontend Development",  "Building user interfaces and client-side web applications"),
+            ("Backend Development",   "Server-side logic, APIs, and data persistence"),
+            ("DevOps",                "Infrastructure automation, CI/CD, and container orchestration"),
+            ("Data Engineering",      "Data pipelines, storage, and processing at scale"),
+            ("Cloud Computing",       "Provisioning and managing cloud infrastructure and services"),
+        };
 
-        var frontend = topics[0];
-        var backend = topics[1];
-        var devops = topics[2];
-        var dataEng = topics[3];
-        var cloud = topics[4];
+        var topics = topicDefs.Select(t => new Topic { Name = t.Item1, Description = t.Item2 }).ToList();
+        context.Topics.AddRange(topics);
+        await context.SaveChangesAsync();
 
         var skillDefs = new[]
         {
-            new { Title = "JavaScript",      Description = "Dynamic scripting language for web development" },
-            new { Title = "TypeScript",      Description = "Typed superset of JavaScript for large-scale apps" },
-            new { Title = "React",           Description = "Component-based UI library by Meta" },
-            new { Title = "CSS & Styling",   Description = "Cascading stylesheets and modern layout techniques" },
-            new { Title = "Python",          Description = "Versatile language used in web, data, and scripting" },
-            new { Title = "SQL",             Description = "Structured query language for relational databases" },
-            new { Title = "REST APIs",       Description = "Designing and consuming HTTP-based web services" },
-            new { Title = "Git",             Description = "Distributed version control system" },
-            new { Title = "Docker",          Description = "Container platform for packaging and running applications" },
-            new { Title = "Kubernetes",      Description = "Container orchestration for scaling and managing workloads" },
-            new { Title = "CI/CD",           Description = "Continuous integration and delivery pipelines" },
-            new { Title = "Linux",           Description = "Command-line proficiency and shell scripting" },
-            new { Title = "Terraform",       Description = "Infrastructure-as-code tool for cloud provisioning" },
-            new { Title = "PostgreSQL",      Description = "Advanced open-source relational database" },
-            new { Title = "System Design",   Description = "Designing scalable, reliable distributed systems" },
+            ("JavaScript",    "Dynamic scripting language for web development"),
+            ("TypeScript",    "Typed superset of JavaScript for large-scale apps"),
+            ("React",         "Component-based UI library by Meta"),
+            ("CSS & Styling", "Cascading stylesheets and modern layout techniques"),
+            ("Python",        "Versatile language used in web, data, and scripting"),
+            ("SQL",           "Structured query language for relational databases"),
+            ("REST APIs",     "Designing and consuming HTTP-based web services"),
+            ("Git",           "Distributed version control system"),
+            ("Docker",        "Container platform for packaging and running applications"),
+            ("Kubernetes",    "Container orchestration for scaling and managing workloads"),
+            ("CI/CD",         "Continuous integration and delivery pipelines"),
+            ("Linux",         "Command-line proficiency and shell scripting"),
+            ("Terraform",     "Infrastructure-as-code tool for cloud provisioning"),
+            ("PostgreSQL",    "Advanced open-source relational database"),
+            ("System Design", "Designing scalable, reliable distributed systems"),
         };
 
-        var skills = skillDefs
-            .Select(s => new Skill { Title = s.Title, Description = s.Description })
-            .ToList();
+        var skills = skillDefs.Select(s => new Skill { Name = s.Item1, Description = s.Item2 }).ToList();
         context.Skills.AddRange(skills);
         await context.SaveChangesAsync();
 
-        Skill S(string title) => skills.First(s => s.Title == title);
+        Topic T(string name) => topics.First(t => t.Name == name);
+        Skill S(string name) => skills.First(s => s.Name == name);
 
-        // Each entry: (topic, skill, level name)
-        var assignments = new (Topic Topic, Skill Skill, string Level)[]
+        var topicSkills = new (Topic Topic, Skill Skill)[]
         {
             // Frontend
-            (frontend, S("JavaScript"),    "Beginner"),
-            (frontend, S("JavaScript"),    "Intermediate"),
-            (frontend, S("JavaScript"),    "Advanced"),
-            (frontend, S("TypeScript"),    "Intermediate"),
-            (frontend, S("TypeScript"),    "Advanced"),
-            (frontend, S("React"),         "Beginner"),
-            (frontend, S("React"),         "Intermediate"),
-            (frontend, S("React"),         "Advanced"),
-            (frontend, S("CSS & Styling"), "Beginner"),
-            (frontend, S("CSS & Styling"), "Intermediate"),
-            (frontend, S("Git"),           "Beginner"),
+            (T("Frontend Development"), S("JavaScript")),
+            (T("Frontend Development"), S("TypeScript")),
+            (T("Frontend Development"), S("React")),
+            (T("Frontend Development"), S("CSS & Styling")),
+            (T("Frontend Development"), S("Git")),
 
             // Backend
-            (backend, S("Python"),       "Beginner"),
-            (backend, S("Python"),       "Intermediate"),
-            (backend, S("Python"),       "Advanced"),
-            (backend, S("SQL"),          "Beginner"),
-            (backend, S("SQL"),          "Intermediate"),
-            (backend, S("REST APIs"),    "Beginner"),
-            (backend, S("REST APIs"),    "Intermediate"),
-            (backend, S("REST APIs"),    "Advanced"),
-            (backend, S("Git"),          "Beginner"),
-            (backend, S("Docker"),       "Intermediate"),
-            (backend, S("PostgreSQL"),   "Intermediate"),
-            (backend, S("PostgreSQL"),   "Advanced"),
-            (backend, S("System Design"),"Advanced"),
+            (T("Backend Development"), S("Python")),
+            (T("Backend Development"), S("SQL")),
+            (T("Backend Development"), S("REST APIs")),
+            (T("Backend Development"), S("Git")),
+            (T("Backend Development"), S("Docker")),
+            (T("Backend Development"), S("PostgreSQL")),
+            (T("Backend Development"), S("System Design")),
 
             // DevOps
-            (devops, S("Docker"),      "Beginner"),
-            (devops, S("Docker"),      "Intermediate"),
-            (devops, S("Docker"),      "Advanced"),
-            (devops, S("Kubernetes"),  "Intermediate"),
-            (devops, S("Kubernetes"),  "Advanced"),
-            (devops, S("CI/CD"),       "Beginner"),
-            (devops, S("CI/CD"),       "Intermediate"),
-            (devops, S("CI/CD"),       "Advanced"),
-            (devops, S("Linux"),       "Beginner"),
-            (devops, S("Linux"),       "Intermediate"),
-            (devops, S("Git"),         "Intermediate"),
-            (devops, S("Terraform"),   "Intermediate"),
-            (devops, S("Terraform"),   "Advanced"),
+            (T("DevOps"), S("Docker")),
+            (T("DevOps"), S("Kubernetes")),
+            (T("DevOps"), S("CI/CD")),
+            (T("DevOps"), S("Linux")),
+            (T("DevOps"), S("Git")),
+            (T("DevOps"), S("Terraform")),
 
             // Data Engineering
-            (dataEng, S("Python"),      "Intermediate"),
-            (dataEng, S("Python"),      "Advanced"),
-            (dataEng, S("SQL"),         "Intermediate"),
-            (dataEng, S("SQL"),         "Advanced"),
-            (dataEng, S("PostgreSQL"),  "Beginner"),
-            (dataEng, S("Linux"),       "Intermediate"),
-            (dataEng, S("Docker"),      "Intermediate"),
+            (T("Data Engineering"), S("Python")),
+            (T("Data Engineering"), S("SQL")),
+            (T("Data Engineering"), S("PostgreSQL")),
+            (T("Data Engineering"), S("Linux")),
+            (T("Data Engineering"), S("Docker")),
 
             // Cloud
-            (cloud, S("Terraform"),    "Beginner"),
-            (cloud, S("Terraform"),    "Intermediate"),
-            (cloud, S("Terraform"),    "Advanced"),
-            (cloud, S("Docker"),       "Intermediate"),
-            (cloud, S("Kubernetes"),   "Advanced"),
-            (cloud, S("CI/CD"),        "Advanced"),
-            (cloud, S("Linux"),        "Intermediate"),
-            (cloud, S("System Design"),"Advanced"),
+            (T("Cloud Computing"), S("Terraform")),
+            (T("Cloud Computing"), S("Docker")),
+            (T("Cloud Computing"), S("Kubernetes")),
+            (T("Cloud Computing"), S("CI/CD")),
+            (T("Cloud Computing"), S("Linux")),
+            (T("Cloud Computing"), S("System Design")),
         };
 
-        var topicSkillLevels = assignments
-            .Select(a => new TopicSkillLevel
-            {
-                TopicId = a.Topic.Id,
-                SkillId = a.Skill.Id,
-                LevelId = LevelFor(a.Topic, a.Level).Id,
-            })
-            .ToList();
-
-        context.TopicSkillLevels.AddRange(topicSkillLevels);
+        context.TopicSkills.AddRange(topicSkills.Select(ts => new TopicSkill
+        {
+            TopicId = ts.Topic.Id,
+            SkillId = ts.Skill.Id,
+        }));
         await context.SaveChangesAsync();
     }
 }

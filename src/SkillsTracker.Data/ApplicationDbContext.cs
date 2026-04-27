@@ -11,14 +11,12 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<Skill> Skills { get; set; }
     public DbSet<Topic> Topics { get; set; }
     public DbSet<Level> Levels { get; set; }
-    public DbSet<UserSkill> UserSkills { get; set; }
-    public DbSet<TopicSkillLevel> TopicSkillLevels { get; set; }
+    public DbSet<UserSkillProgress> UserSkillProgresses { get; set; }
+    public DbSet<TopicSkill> TopicSkills { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        new UserSkillEntityTypeConfiguration().Configure(modelBuilder.Entity<UserSkill>());
-        new TopicSkillLevelEntityTypeConfiguration().Configure(
-            modelBuilder.Entity<TopicSkillLevel>()
-        );
+        new UserSkillProgressEntityTypeConfiguration().Configure(modelBuilder.Entity<UserSkillProgress>());
+        new TopicSkillEntityTypeConfiguration().Configure(modelBuilder.Entity<TopicSkill>());
     }
 }

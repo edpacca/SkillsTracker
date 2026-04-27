@@ -9,9 +9,11 @@ public class User
 
     [Required]
     [MaxLength(100)]
-    public string? Name { get; set; }
+    public string? Username { get; set; }
+
     public string? Email { get; set; }
+    public DateTime CreatedAt { get; set; }
 
     [JsonIgnore]
-    public IList<UserSkill> UserSkills { get; set; } = [];
+    public IList<UserSkillProgress> UserSkillProgresses { get; set; } = [];
 }

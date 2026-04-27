@@ -33,7 +33,7 @@ sealed class Program
             using var scope = App.Services.CreateScope();
             var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             db.Database.Migrate();
-            // DatabaseSeeder.SeedUsers(db).GetAwaiter().GetResult();
+            DatabaseSeeder.SeedUsers(db).GetAwaiter().GetResult();
             DatabaseSeeder.SeedSkillsAndTopics(db).GetAwaiter().GetResult();
         }
         catch (Exception ex)

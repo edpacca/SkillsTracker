@@ -4,14 +4,18 @@ using SkillsTracker.Core.Models;
 
 namespace SkillsTracker.Data.EntityConfiguration;
 
-class UserSkillEntityTypeConfiguration : IEntityTypeConfiguration<UserSkill>
+class UserSkillProgressEntityTypeConfiguration : IEntityTypeConfiguration<UserSkillProgress>
 {
-    public void Configure(EntityTypeBuilder<UserSkill> builder)
+    public void Configure(EntityTypeBuilder<UserSkillProgress> builder)
     {
-        builder.HasKey(us => new { us.UserId, us.SkillId });
+        builder.HasKey(usp => usp.Id);
 
-        builder.HasOne(us => us.User).WithMany(u => u.UserSkills).HasForeignKey(us => us.UserId);
+        builder.HasIndex(usp => new { usp.UserId, usp.SkillId }).IsUnique();
 
-        builder.HasOne(us => us.Skill).WithMany(s => s.UserSkills).HasForeignKey(us => us.SkillId);
+        builder.HasOne(usp => usp.User).WithMany(u => u.UserSkillProgresses).HasForeignKey(usp => usp.UserId);
+
+        builder.HasOne(usp => usp.Skill).WithMany(s => s.UserSkillProgresses).HasForeignKey(usp => usp.SkillId);
+
+        builder.HasOne(usp => usp.Level).WithMany().HasForeignKey(usp => usp.LevelId);
     }
 }

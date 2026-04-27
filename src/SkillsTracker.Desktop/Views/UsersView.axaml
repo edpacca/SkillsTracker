@@ -9,7 +9,7 @@
               GridLinesVisibility="All">
         <DataGrid.Columns>
             <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60" />
-            <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" />
+            <DataGridTextColumn Header="Username" Binding="{Binding Username}" Width="*" />
             <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*" />
         </DataGrid.Columns>
     </DataGrid>
