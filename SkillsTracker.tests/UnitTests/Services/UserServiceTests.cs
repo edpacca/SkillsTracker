@@ -24,7 +24,7 @@ public class UserServiceTests : IClassFixture<UserServiceMockRepository>
     {
         // Data
         string[] names = ["Brandon", "Alexa", "Sally", "Jon"];
-        var users = names.Select(name => new User { Name = name }).ToList();
+        var users = names.Select(name => new User { Username = name }).ToList();
         var pagedResponse = new PagedResponse<User>()
         {
             Data = users,
@@ -41,14 +41,14 @@ public class UserServiceTests : IClassFixture<UserServiceMockRepository>
 
         // Assert
         Assert.Equal(4, result.TotalCount);
-        Assert.Equal(names, result.Data.Select(x => x.Name));
+        Assert.Equal(names, result.Data.Select(x => x.Username));
     }
 
     [Fact]
     public async Task GetUserByIdAsync_ShouldReturnCorrectUser()
     {
         // Data
-        var user = new User { Id = 1, Name = "Persephone" };
+        var user = new User { Id = 1, Username = "Persephone" };
 
         // Setup
         _mockRepo.Setup(r => r.GetByIdAsync(1)).ReturnsAsync(user);
@@ -69,7 +69,7 @@ public class UserServiceTests : IClassFixture<UserServiceMockRepository>
     public async Task CreateUserAsync_ShouldReturnCreatedUser()
     {
         // Arrange
-        var user = new User { Name = "Eddie" };
+        var user = new User { Username = "Winston" };
         _mockRepo.Setup(r => r.CreateAsync(user)).ReturnsAsync(user);
 
         // Act
@@ -78,14 +78,14 @@ public class UserServiceTests : IClassFixture<UserServiceMockRepository>
         // Assert
         Assert.NotNull(result);
         Assert.Equal(user.Id, result.Id);
-        Assert.Equal(user.Name, result.Name);
+        Assert.Equal(user.Username, result.Username);
     }
 
     [Fact]
     public async Task UpdateUserAsync_ShouldReturnTrue_WhenUpdateSucceeds()
     {
         // Arrange
-        var user = new User { Id = 1, Name = "Updated Eddie" };
+        var user = new User { Id = 1, Username = "Updated Winston" };
         _mockRepo.Setup(r => r.UpdateAsync(user)).ReturnsAsync(true);
 
         // Act
@@ -99,7 +99,7 @@ public class UserServiceTests : IClassFixture<UserServiceMockRepository>
     public async Task UpdateUserAsync_ShouldThrowArgumentException_WhenIdMismatch()
     {
         // Arrange
-        var user = new User { Id = 2, Name = "Updated Eddie" };
+        var user = new User { Id = 2, Username = "Updated Winston" };
 
         // Act & Assert
         var exception = await Assert.ThrowsAsync<ArgumentException>(() =>
@@ -112,7 +112,7 @@ public class UserServiceTests : IClassFixture<UserServiceMockRepository>
     public async Task UpdateUserAsync_ShouldThrowKeyNotFoundException_WhenUserDoesNotExist()
     {
         // Arrange
-        var user = new User { Id = 1, Name = "Updated Eddie" };
+        var user = new User { Id = 1, Username = "Updated Winston" };
         _mockRepo.Setup(r => r.UpdateAsync(user)).ThrowsAsync(new DbUpdateConcurrencyException());
         _mockRepo.Setup(r => r.ExistsAsync(user.Id)).ReturnsAsync(false);
 

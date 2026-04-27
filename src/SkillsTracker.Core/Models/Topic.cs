@@ -10,5 +10,7 @@ public class Topic
     [MaxLength(100)]
     public string? Name { get; set; }
 
-    public IList<TopicSkillLevel> TopicSkillLevels { get; set; } = [];
+    public string? Description { get; set; }
+
+    public IList<TopicSkill> TopicSkills { get; set; } = [];
 }

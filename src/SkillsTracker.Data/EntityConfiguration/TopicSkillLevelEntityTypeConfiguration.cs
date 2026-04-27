@@ -4,27 +4,14 @@ using SkillsTracker.Core.Models;
 
 namespace SkillsTracker.Data.EntityConfiguration;
 
-class TopicSkillLevelEntityTypeConfiguration : IEntityTypeConfiguration<TopicSkillLevel>
+class TopicSkillEntityTypeConfiguration : IEntityTypeConfiguration<TopicSkill>
 {
-    public void Configure(EntityTypeBuilder<TopicSkillLevel> builder)
+    public void Configure(EntityTypeBuilder<TopicSkill> builder)
     {
-        builder.HasKey(tsl => new
-        {
-            tsl.TopicId,
-            tsl.SkillId,
-            tsl.LevelId,
-        });
+        builder.HasKey(ts => new { ts.TopicId, ts.SkillId });
 
-        builder
-            .HasOne(tsl => tsl.Topic)
-            .WithMany(t => t.TopicSkillLevels)
-            .HasForeignKey(tsl => tsl.TopicId);
+        builder.HasOne(ts => ts.Topic).WithMany(t => t.TopicSkills).HasForeignKey(ts => ts.TopicId);
 
-        builder
-            .HasOne(tsl => tsl.Skill)
-            .WithMany(s => s.TopicSkillLevels)
-            .HasForeignKey(tsl => tsl.SkillId);
-
-        builder.HasOne(tsl => tsl.Level).WithMany().HasForeignKey(tsl => tsl.LevelId);
+        builder.HasOne(ts => ts.Skill).WithMany(s => s.TopicSkills).HasForeignKey(ts => ts.SkillId);
     }
 }

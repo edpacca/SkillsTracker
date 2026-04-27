@@ -9,13 +9,13 @@ public class Skill
 
     [Required]
     [MaxLength(100)]
-    public string? Title { get; set; }
+    public string? Name { get; set; }
 
     public string? Description { get; set; }
 
     [JsonIgnore]
-    public IList<TopicSkillLevel> TopicSkillLevels { get; set; } = [];
+    public IList<TopicSkill> TopicSkills { get; set; } = [];
 
     [JsonIgnore]
-    public IList<UserSkill> UserSkills { get; set; } = [];
+    public IList<UserSkillProgress> UserSkillProgresses { get; set; } = [];
 }

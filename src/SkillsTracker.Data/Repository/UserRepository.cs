@@ -63,9 +63,9 @@ public class UserRepository : IPagedRepository<User>
 
         query = sortBy.ToLower() switch
         {
-            "name"  => asc ? query.OrderBy(u => u.Name)  : query.OrderByDescending(u => u.Name),
-            "email" => asc ? query.OrderBy(u => u.Email) : query.OrderByDescending(u => u.Email),
-            _       => asc ? query.OrderBy(u => u.Id)    : query.OrderByDescending(u => u.Id),
+            "username" => asc ? query.OrderBy(u => u.Username)  : query.OrderByDescending(u => u.Username),
+            "email"    => asc ? query.OrderBy(u => u.Email) : query.OrderByDescending(u => u.Email),
+            _          => asc ? query.OrderBy(u => u.Id)    : query.OrderByDescending(u => u.Id),
         };
 
         var totalCount = await query.CountAsync();

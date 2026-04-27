@@ -10,8 +10,5 @@ public class Level
     [MaxLength(36)]
     public string? Name { get; set; }
 
-    public int? Value { get; set; }
-
-    public int TopicId { get; set; }
-    public Topic? Topic { get; set; }
+    public int SortOrder { get; set; }
 }

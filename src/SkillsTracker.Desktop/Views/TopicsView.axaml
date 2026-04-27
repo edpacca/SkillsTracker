@@ -1,16 +1,16 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="using:SkillsTracker.Desktop.ViewModels"
-             x:Class="SkillsTracker.Desktop.Views.UsersView"
-             x:DataType="vm:UsersViewModel">
-    <DataGrid ItemsSource="{Binding Users}"
+             x:Class="SkillsTracker.Desktop.Views.TopicsView"
+             x:DataType="vm:TopicsViewModel">
+    <DataGrid ItemsSource="{Binding Topics}"
               AutoGenerateColumns="False"
               IsReadOnly="True"
               GridLinesVisibility="All">
         <DataGrid.Columns>
             <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60" />
-            <DataGridTextColumn Header="Username" Binding="{Binding Username}" Width="*" />
-            <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*" />
+            <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" />
+            <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="2*" />
         </DataGrid.Columns>
     </DataGrid>
 </UserControl>
