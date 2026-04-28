@@ -18,6 +18,6 @@ public class UserSkillProgress
     public int LevelId { get; set; }
     public Level? Level { get; set; }
 
-    public DateTime AchievedAt { get; set; }
+    public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
 }
